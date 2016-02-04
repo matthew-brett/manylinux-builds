@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
-NUMPY_VERSIONS="1.6.1 1.6.2 1.7.1 1.7.2 1.8.0 1.9.3 1.10.4"
+NUMPY_VERSIONS="1.6.0 1.6.1 1.6.2 1.7.0 1.7.1 1.7.2 1.8.0 1.8.1 1.8.2 \
+    1.9.0 1.9.1 1.9.2 1.9.3 1.10.0 1.10.1 1.10.2 1.10.3 1.10.4"
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 CYTHON_VERSION=0.21.2
 
