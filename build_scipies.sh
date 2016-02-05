@@ -27,7 +27,9 @@ mkdir unfixed_wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP=/opt/$PYTHON/bin/pip
     PIPI_ML="$PIP install -f $MANYLINUX_URL"
-    if [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ||
+    if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ]; then
+        $PIPI_ML "numpy==1.9.0"
+    elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ||
         [ $(lex_ver $SCIPY) -ge $(lex_ver 0.17) ] ; then
         $PIPI_ML "numpy==1.7.0"
     else
@@ -37,6 +39,9 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         # Does Python 3.5 need scipy >= 0.16?
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] &&
             [ $(lex_ver $SCIPY) -lt $(lex_ver 0.16) ] ; then
+            continue
+        elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] &&
+            [ $(lex_ver $SCIPY) -lt $(lex_ver 0.12) ] ; then
             continue
         fi
         echo "Building scipy $SCIPY for Python $PYTHON"
