@@ -16,10 +16,9 @@ function lex_ver {
     echo $1 | awk -F "." '{printf "%03d%03d%03d", $1, $2, $3}'
 }
 
-# Install openblas for later numpies
-curl -sL http://github.com/xianyi/OpenBLAS/archive/v0.2.15.tar.gz > v0.2.15.tar.gz
-tar -xzvf v0.2.15.tar.gz
-(cd OpenBLAS-0.2.15/ && make DYNAMIC_ARCH=1 USE_OPENMP=0 NUM_THREADS=64 && make PREFIX=/usr/local/ install)
+# Install openblas
+curl -LO $MANYLINUX_URL/openblas_0.2.15.tgz
+tar xf openblas_0.2.15.tgz
 
 # Directory to store wheels
 mkdir unfixed_wheels
