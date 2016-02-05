@@ -1,5 +1,5 @@
 diff --git a/numpy/distutils/system_info.py b/numpy/distutils/system_info.py
-index 08c5cd5..a34e6c4 100644
+index bac90fb..6d822be 100644
 --- a/numpy/distutils/system_info.py
 +++ b/numpy/distutils/system_info.py
 @@ -12,6 +12,7 @@ classes are available:
@@ -10,7 +10,7 @@ index 08c5cd5..a34e6c4 100644
    blas_opt_info       # usage recommended
    lapack_opt_info     # usage recommended
    fftw_info,dfftw_info,sfftw_info
-@@ -299,6 +300,7 @@ def get_info(name, notfound_action=0):
+@@ -289,6 +290,7 @@ def get_info(name, notfound_action=0):
            'lapack_atlas': lapack_atlas_info,  # use lapack_opt instead
            'lapack_atlas_threads': lapack_atlas_threads_info,  # ditto
            'mkl': mkl_info,
@@ -18,85 +18,31 @@ index 08c5cd5..a34e6c4 100644
            'lapack_mkl': lapack_mkl_info,      # use lapack_opt instead
            'blas_mkl': blas_mkl_info,          # use blas_opt instead
            'x11': x11_info,
-@@ -1367,7 +1369,22 @@ class lapack_opt_info(system_info):
+@@ -1357,6 +1359,11 @@ class lapack_opt_info(system_info):
  
      def calc_info(self):
  
--        if sys.platform == 'darwin' and not os.environ.get('ATLAS', None):
 +        openblas_info = get_info('openblas')
 +        if openblas_info:
 +            self.set_info(**openblas_info)
 +            return
 +
-+        lapack_mkl_info = get_info('lapack_mkl')
-+        if lapack_mkl_info:
-+            self.set_info(**lapack_mkl_info)
-+            return
-+
-+        atlas_info = get_info('atlas_threads')
-+        if not atlas_info:
-+            atlas_info = get_info('atlas')
-+
-+        if sys.platform == 'darwin' and not atlas_info:
-+            # Use the system lapack from Accelerate or vecLib under OSX
+         if sys.platform == 'darwin' and not os.environ.get('ATLAS', None):
              args = []
              link_args = []
-             if get_platform()[-4:] == 'i386' or 'intel' in get_platform() or \
-@@ -1395,14 +1412,6 @@ class lapack_opt_info(system_info):
-                               define_macros=[('NO_ATLAS_INFO', 3)])
-                 return
- 
--        lapack_mkl_info = get_info('lapack_mkl')
--        if lapack_mkl_info:
--            self.set_info(**lapack_mkl_info)
--            return
--
--        atlas_info = get_info('atlas_threads')
--        if not atlas_info:
--            atlas_info = get_info('atlas')
-         #atlas_info = {} ## uncomment for testing
-         need_lapack = 0
-         need_blas = 0
-@@ -1456,7 +1465,22 @@ class blas_opt_info(system_info):
+@@ -1446,6 +1453,11 @@ class blas_opt_info(system_info):
  
      def calc_info(self):
  
--        if sys.platform == 'darwin' and not os.environ.get('ATLAS', None):
-+        blas_mkl_info = get_info('blas_mkl')
-+        if blas_mkl_info:
-+            self.set_info(**blas_mkl_info)
-+            return
-+
 +        openblas_info = get_info('openblas')
 +        if openblas_info:
 +            self.set_info(**openblas_info)
 +            return
 +
-+        atlas_info = get_info('atlas_blas_threads')
-+        if not atlas_info:
-+            atlas_info = get_info('atlas_blas')
-+
-+        if sys.platform == 'darwin'and not atlas_info:
-+            # Use the system BLAS from Accelerate or vecLib under OSX
+         if sys.platform == 'darwin' and not os.environ.get('ATLAS', None):
              args = []
              link_args = []
-             if get_platform()[-4:] == 'i386' or 'intel' in get_platform() or \
-@@ -1488,14 +1512,6 @@ class blas_opt_info(system_info):
-                               define_macros=[('NO_ATLAS_INFO', 3)])
-                 return
- 
--        blas_mkl_info = get_info('blas_mkl')
--        if blas_mkl_info:
--            self.set_info(**blas_mkl_info)
--            return
--
--        atlas_info = get_info('atlas_blas_threads')
--        if not atlas_info:
--            atlas_info = get_info('atlas_blas')
-         need_blas = 0
-         info = {}
-         if atlas_info:
-@@ -1538,6 +1554,23 @@ class blas_info(system_info):
+@@ -1528,6 +1540,27 @@ class blas_info(system_info):
          self.set_info(**info)
  
  
@@ -110,8 +56,12 @@ index 08c5cd5..a34e6c4 100644
 +        lib_dirs = self.get_lib_dirs()
 +
 +        openblas_libs = self.get_libs('openblas_libs', self._lib_names)
-+        info = self.check_libs(lib_dirs, openblas_libs, [])
-+        if info is None:
++        for d in lib_dirs:
++            blas = self.check_libs(d,openblas_libs,[])
++            if blas is not None:
++                info = blas
++                break
++        else:
 +            return
 +        info['language'] = 'f77'  # XXX: is it generally true?
 +        self.set_info(**info)
