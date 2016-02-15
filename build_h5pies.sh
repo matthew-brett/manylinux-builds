@@ -1,7 +1,19 @@
 #!/bin/bash
+# Build h5py wheels
+# Run with:
+#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_h5pies.sh
+# or something like:
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_h5pies.sh
+# or maybe:
+#    docker run --rm -e H5PY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_h5pies.sh
 set -e
-PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
-H5PY_VERSIONS="2.2.0 2.2.1 2.3.0 2.3.1 2.4.0 2.5.0 2.6.0"
+if [ -z $PYTHON_VERSIONS ]; then
+    PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
+fi
+if [ -z $H5PY_VERSIONS ]; then
+    H5PY_VERSIONS="2.2.0 2.2.1 2.3.0 2.3.1 2.4.0 2.5.0 2.6.0"
+fi
+
 CYTHON_VERSION=0.22.1
 HDF5_VERSION_1=1.8.3
 HDF5_VERSION_2=1.8.16

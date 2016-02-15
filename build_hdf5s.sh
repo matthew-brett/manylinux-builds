@@ -1,5 +1,10 @@
 #!/bin/bash
-# Build libh5py library
+# Build libh5py libraries
+# Run with:
+#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_hdf5s.sh
+# Followed by something like:
+#    scp hdf5-1.8.3.tgz nipy.bic.berkeley.edu:/home/manylinux
+#    scp hdf5-1.8.16.tgz nipy.bic.berkeley.edu:/home/manylinux
 set -e
 
 SZIP_VERSION=2.1

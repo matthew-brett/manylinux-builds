@@ -1,9 +1,23 @@
 #!/bin/bash
+# Build scipy packages
+# Run with:
+#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+# or something like:
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+# or:
+#    docker run --rm -e SCIPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+#
+# Make sure numpy and Cython wheels, openblas arcive are on the manylinux
+# server first.
 set -e
-PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
-SCIPY_VERSIONS="0.9.0 0.10.0 0.10.1 0.11.0 0.12.0 0.12.1 \
-    0.13.0 0.13.1 0.13.2 0.13.3 0.14.0 0.14.1\
-    0.15.0 0.15.1 0.16.0 0.16.1 0.17.0"
+if [ -z $PYTHON_VERSIONS ]; then
+    PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
+fi
+if [ -z $SCIPY_VERSIONS ]; then
+    SCIPY_VERSIONS="0.9.0 0.10.0 0.10.1 0.11.0 0.12.0 0.12.1 \
+        0.13.0 0.13.1 0.13.2 0.13.3 0.14.0 0.14.1\
+        0.15.0 0.15.1 0.16.0 0.16.1 0.17.0"
+fi
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH

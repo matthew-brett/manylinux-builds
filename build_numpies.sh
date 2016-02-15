@@ -1,8 +1,20 @@
 #!/bin/bash
+# Run with:
+#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+# or something like:
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+# or:
+#    docker run --rm -e NUMPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+
 set -e
-PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
-NUMPY_VERSIONS="1.6.0 1.6.1 1.6.2 1.7.0 1.7.1 1.7.2 1.8.0 1.8.1 1.8.2 \
-    1.9.0 1.9.1 1.9.2 1.9.3 1.10.0 1.10.1 1.10.2 1.10.3 1.10.4"
+if [ -z $PYTHON_VERSIONS ]; then
+    PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
+fi
+if [ -z $NUMPY_VERSIONS ]; then
+    NUMPY_VERSIONS="1.6.0 1.6.1 1.6.2 1.7.0 1.7.1 1.7.2 1.8.0 1.8.1 1.8.2 \
+        1.9.0 1.9.1 1.9.2 1.9.3 1.10.0 1.10.1 1.10.2 1.10.3 1.10.4"
+fi
+
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 CYTHON_VERSION=0.21.2
 
