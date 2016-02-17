@@ -1,11 +1,11 @@
 #!/bin/bash
 # Build scipy packages
 # Run with:
-#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+#    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_scipies.sh
 # or something like:
-#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_scipies.sh
 # or:
-#    docker run --rm -e SCIPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_scipies.sh
+#    docker run --rm -e SCIPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_scipies.sh
 #
 # Make sure numpy and Cython wheels, openblas arcive are on the manylinux
 # server first.

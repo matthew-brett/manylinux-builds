@@ -4,9 +4,9 @@
 # Wheels to build listed in "misc_requirements.txt"
 #
 # Run with:
-#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_misc.sh
+#    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_misc.sh
 # or something like:
-#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_misc.sh
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_misc.sh
 set -e
 if [ -z $PYTHON_VERSIONS ]; then
     PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"

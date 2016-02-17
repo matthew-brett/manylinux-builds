@@ -1,7 +1,7 @@
 #!/bin/bash
 # Build OpenBLAS library
 # Run with:
-#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_openblas.sh
+#    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_openblas.sh
 # Followed by something like:
 #    scp openblas_0.2.15.tgz nipy.bic.berkeley.edu:/home/manylinux
 set -e

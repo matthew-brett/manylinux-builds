@@ -1,10 +1,10 @@
 #!/bin/bash
 # Run with:
-#    docker run --rm -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+#    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_numpies.sh
 # or something like:
-#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+#    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_numpies.sh
 # or:
-#    docker run --rm -e NUMPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manlinux1_x86_64 /io/build_numpies.sh
+#    docker run --rm -e NUMPY_VERSIONS=1.10.4 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_numpies.sh
 
 set -e
 if [ -z $PYTHON_VERSIONS ]; then
