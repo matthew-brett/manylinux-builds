@@ -8,16 +8,15 @@
 # or something like:
 #    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_misc.sh
 set -e
-if [ -z $PYTHON_VERSIONS ]; then
-    PYTHON_VERSIONS="2.6 2.7 3.3 3.4 3.5"
-fi
 
-MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
+# Manylinux, openblas version, lex_ver, Python versions
+source /io/common_vars.sh
 
-# Add manylinux repo
+# Add manylinux and local repo to pip config
 mkdir ~/.pip
 cat > ~/.pip/pip.conf << EOF
 [global]
+find-links = /io/wheelhouse
 find-links = $MANYLINUX_URL
 EOF
 
@@ -27,7 +26,8 @@ mkdir unfixed_wheels
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP=/opt/$PYTHON/bin/pip
-    # To satisfy packages depending on numpy distuils in setup.py
+    # To satisfy packages depending on numpy distutils in
+    # setup.py
     $PIP install numpy
     echo "Building for $PYTHON"
     while read req_line; do

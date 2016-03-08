@@ -2,3 +2,5 @@ wheelhouse/
 fixed/
 unfixed/
 built_rpms/
+scratch/
+libraries/
