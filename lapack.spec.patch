@@ -1,0 +1,39 @@
+--- lapack.spec	2015-09-12 14:23:58.000000000 +0000
++++ lapack.spec.manylinux	2016-03-08 03:49:12.345378036 +0000
+@@ -7,6 +7,9 @@
+ %global arch64 0
+ %endif
+ 
++# Fix from https://www.jethrocarr.com/2012/05/23/bad-packaging-habits/
++BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
++
+ Summary: Numerical linear algebra package libraries
+ Name: lapack
+ Version: %{mediumver}.0
+@@ -26,7 +29,7 @@
+ Patch6: lapack-3.5.0-lapacke-matgenobj.patch
+ Patch7: lapack-3.5.0-lapacke-tmglib.patch
+ Patch8: lapack-3.5.0-R-blas-fixes.patch
+-BuildRequires: gcc-gfortran
++BuildRequires: devtoolset-2-gcc-gfortran
+ Requires: blas%{?_isa} = %{version}-%{release}
+ 
+ %description
+@@ -71,7 +74,7 @@
+ Summary: BLAS development libraries
+ Group: Development/Libraries
+ Requires: blas%{?_isa} = %{version}-%{release}
+-Requires: gcc-gfortran
++Requires: devtoolset-2-gcc-gfortran
+ 
+ %description -n blas-devel
+ BLAS development libraries (shared).
+@@ -136,7 +139,7 @@
+ Group: Development/Libraries
+ Requires: blas64%{?_isa} = %{version}-%{release}
+ Requires: blas-devel%{?_isa} = %{version}-%{release}
+-Requires: gcc-gfortran
++Requires: devtoolset-2-gcc-gfortran
+ 
+ %description -n blas64-devel
+ BLAS development libraries (shared).

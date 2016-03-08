@@ -1,0 +1,39 @@
+--- atlas.spec	2016-02-03 17:11:30.000000000 +0000
++++ atlas.spec.manylinux	2016-03-08 02:42:15.878628826 +0000
+@@ -1,5 +1,8 @@
+ %define enable_native_atlas 0
+ 
++# Fix from https://www.jethrocarr.com/2012/05/23/bad-packaging-habits/
++BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
++
+ Name:           atlas
+ Version:        3.10.2
+ %if "%{?enable_native_atlas}" != "0"
+@@ -57,7 +60,7 @@
+ # for ppc64le
+ Patch100:       atlas.3.10.2-ppc64le_do_not_use_files_with_lvx.patch
+ 
+-BuildRequires:  gcc-gfortran, lapack-static
++BuildRequires:  devtoolset-2-gcc-gfortran, lapack-static
+ 
+ %ifarch x86_64
+ Obsoletes:      atlas-sse3 < 3.10
+@@ -398,12 +401,12 @@
+ %if "%{?enable_native_atlas}" == "0"
+ %ifarch x86_64
+ 	if [ "$type" = "base" ]; then
+-#		sed -i 's#ARCH =.*#ARCH = HAMMER64SSE2#' Make.inc
+-		sed -i 's#ARCH =.*#ARCH = HAMMER64SSE3#' Make.inc
+-#		sed -i 's#-DATL_SSE3##' Make.inc
+-		sed -i 's#-DATL_AVX##' Make.inc 
+-#		sed -i 's#-msse3#-msse2#' Make.inc 
+-		sed -i 's#-mavx#-msse3#' Make.inc
++ 		sed -i 's#ARCH =.*#ARCH = HAMMER64SSE2#' Make.inc
++#               sed -i 's#ARCH =.*#ARCH = HAMMER64SSE3#' Make.inc
++ 		sed -i 's#-DATL_SSE3##' Make.inc
++                sed -i 's#-DATL_AVX##' Make.inc 
++ 		sed -i 's#-msse3#-msse2#' Make.inc
++                sed -i 's#-mavx#-msse2#' Make.inc
+ 		echo 'base makefile edited' 
+ #		sed -i 's#PMAKE = $(MAKE) .*#PMAKE = $(MAKE) -j 1#' Make.inc 
+ 	elif [ "$type" = "sse3" ]; then
