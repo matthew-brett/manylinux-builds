@@ -1,0 +1,7 @@
+sudo: required
+services:
+  - docker
+install:
+    - docker pull quay.io/pypa/manylinux1_x86_64
+script:
+    - docker ps -a
