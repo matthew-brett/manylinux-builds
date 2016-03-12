@@ -11,7 +11,7 @@ set -e
 source /io/common_vars.sh
 
 if [ -z "$HDF5_VERSIONS" ]; then
-    HDF5_VERSIONS="1.8.3 1.8.18"
+    HDF5_VERSIONS="1.8.3"
 fi
 
 SZIP_VERSION=2.1
