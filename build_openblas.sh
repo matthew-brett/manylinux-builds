@@ -6,11 +6,11 @@
 #    scp openblas_0.2.15.tgz nipy.bic.berkeley.edu:/home/manylinux
 set -e
 
-source io/common_vars.sh
+source /io/common_vars.sh
 
 git clone /io/OpenBLAS
 cd OpenBLAS
 git checkout "v${OPENBLAS_VERSION}"
 git clean -fxd
 make DYNAMIC_ARCH=1 USE_OPENMP=0 NUM_THREADS=64 && make PREFIX=/usr/local/ install
-tar cf /io/libraries/openblas_${OPENBLAS_VERSION}.tgz /usr/local/lib /usr/local/include
+tar cf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz /usr/local/lib /usr/local/include

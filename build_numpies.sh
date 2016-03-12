@@ -19,7 +19,7 @@ fi
 CYTHON_VERSION=0.21.2
 
 # Install openblas
-tar xf /io/libraries/openblas_${OPENBLAS_VERSION}.tgz
+tar xf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz
 
 # Directory to store wheels
 mkdir unfixed_wheels
@@ -30,7 +30,7 @@ cd numpy
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    /opt/$PYTHON/bin/pip install -f /io/wheelhouse -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
+    /opt/$PYTHON/bin/pip install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
     for NUMPY in ${NUMPY_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] &&
             [ $(lex_ver $NUMPY) -lt $(lex_ver 1.7) ] ; then
@@ -55,5 +55,5 @@ cd ..
 
 # Bundle external shared libraries into the wheels
 for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w $WHEELHOUSE/
 done

@@ -37,5 +37,5 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w $WHEELHOUSE/
 done

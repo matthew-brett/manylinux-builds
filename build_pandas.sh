@@ -28,7 +28,7 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         fi
         echo "Building pandas $PANDAS for Python $PYTHON"
         # Put numpy version into the wheelhouse to avoid rebuilding
-        $PIP wheel -f /io/wheelhouse -f $MANYLINUX_URL -w tmp "numpy==$np_ver"
+        $PIP wheel -f $WHEELHOUSE -f $MANYLINUX_URL -w tmp "numpy==$np_ver"
         $PIP install -f tmp "numpy==$np_ver"
         # Add numpy to requirements to avoid upgrading numpy version
         $PIP wheel -f tmp -w unfixed_wheels "numpy==$np_ver" "pandas==$PANDAS"
@@ -37,5 +37,5 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w $WHEELHOUSE/
 done

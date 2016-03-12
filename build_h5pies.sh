@@ -27,8 +27,8 @@ function rm_archive {
 }
 
 # Paths to library archives
-HDF_TGZ1=/io/libraries/hdf5-${HDF5_VERSION_1}.tgz
-HDF_TGZ2=/io/libraries/hdf5-${HDF5_VERSION_2}.tgz
+HDF_TGZ1=$LIBRARIES/hdf5-${HDF5_VERSION_1}.tgz
+HDF_TGZ2=$LIBRARIES/hdf5-${HDF5_VERSION_2}.tgz
 
 # Unpack the first hdf5 library
 tar xf $HDF_TGZ1
@@ -60,7 +60,7 @@ for H5PY in ${H5PY_VERSIONS}; do
             np_ver=1.6.1
         fi
         # Put numpy, cython version into the wheelhouse to avoid rebuilding
-        $PIP wheel -f /io/wheelhouse -f $MANYLINUX_URL -w $TMP_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION"
+        $PIP wheel -f $WHEELHOUSE -f $MANYLINUX_URL -w $TMP_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION"
         $PIP install -f $TMP_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION"
         echo "Building h5py $H5PY for Python $PYTHON"
         git clean -fxd
@@ -70,7 +70,7 @@ for H5PY in ${H5PY_VERSIONS}; do
         # Bundle external shared libraries into the wheels
         # Do this while we still have the matching hdf5 libraries
         for whl in $UNFIXED_WHEELS/h5py-*.whl; do
-            auditwheel repair $whl -w /io/wheelhouse/
+            auditwheel repair $whl -w $WHEELHOUSE/
             rm -f $whl
         done
     done
