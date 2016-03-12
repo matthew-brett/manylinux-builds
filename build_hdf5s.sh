@@ -33,7 +33,9 @@ for HDF5_VERSION in ${HDF5_VERSIONS}; do
     curl -sLO $HDF5_URL/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz
     tar zxf hdf5-$HDF5_VERSION.tar.gz
     ( cd hdf5-$HDF5_VERSION && ./configure --prefix=/usr/local --with-szlib=/usr/local && make && make install )
+    set +e  # Allow missing filenames for tar
     tar zcf $LIBRARIES/hdf5-$HDF5_VERSION.tgz /usr/local/lib/* /usr/local/bin/*h5* /usr/local/include/* /usr/local/hdf5*
+    set -e
     rm -rf /usr/local/lib/* /usr/local/bin/*h5* /usr/local/include/* /usr/local/hdf5*
 done
 echo "Done building $HDF5_VERSIONS"
