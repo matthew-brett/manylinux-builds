@@ -8,8 +8,8 @@
 #    docker run --rm -e SCIPY_VERSIONS=0.17.0 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_scipies.sh
 #
 # Make sure numpy and Cython wheels are on the manylinux server or built in the
-# /io/wheelhouse directory first.
-# OpenBLAS should be in /io/libraries
+# $WHEELHOUSE directory first.
+# OpenBLAS should be in $LIBRARIES directory
 set -e
 
 # Manylinux, openblas version, lex_ver, Python versions
@@ -24,7 +24,7 @@ fi
 CYTHON_VERSION=0.22.1
 
 # Install openblas
-tar xf /io/libraries/openblas_${OPENBLAS_VERSION}.tgz
+tar xf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz
 
 # Directory to store wheels
 mkdir unfixed_wheels
@@ -36,8 +36,8 @@ cd scipy
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP=/opt/$PYTHON/bin/pip
-    $PIP install -f /io/wheelhouse -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
-    PIPI_IO="$PIP install -f /io/wheelhouse"
+    $PIP install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
+    PIPI_IO="$PIP install -f $WHEELHOUSE"
     for SCIPY in ${SCIPY_VERSIONS}; do
         # Does Python 3.5 need scipy >= 0.16?
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] &&
@@ -66,5 +66,5 @@ cd ..
 
 # Bundle external shared libraries into the wheels
 for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w $WHEELHOUSE/
 done

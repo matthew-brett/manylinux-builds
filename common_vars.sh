@@ -27,3 +27,7 @@ function build_archive {
     rm -rf $pkg_root
 }
 
+WHEELHOUSE=/io/wheelhouse
+LIBRARIES=/io/libraries
+mkdir -p $WHEELHOUSE
+mkdir -p $LIBRARIES

@@ -16,7 +16,7 @@ source /io/common_vars.sh
 mkdir ~/.pip
 cat > ~/.pip/pip.conf << EOF
 [global]
-find-links = /io/wheelhouse
+find-links = $WHEELHOUSE
 find-links = $MANYLINUX_URL
 EOF
 
@@ -39,5 +39,5 @@ done
 
 # Bundle external shared libraries into the wheels
 for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w /io/wheelhouse/
+    auditwheel repair $whl -w $WHEELHOUSE/
 done
