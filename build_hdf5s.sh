@@ -24,7 +24,7 @@ yum install -y zlib-devel
 # Build szip
 curl -sLO $SZIP_URL/$SZIP_VERSION/src/szip-$SZIP_VERSION.tar.gz
 tar zxf szip-$SZIP_VERSION.tar.gz
-( cd szip-$SZIP_VERSION &&./configure --enable-encoding=no --prefix=/usr/local 2>/dev/null && make >2/dev/null )
+( cd szip-$SZIP_VERSION && ./configure --enable-encoding=no --prefix=/usr/local 2>/dev/null && make >2/dev/null )
 
 for HDF5_VERSION in ${HDF5_VERSIONS}; do
     # Install szip
