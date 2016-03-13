@@ -1,0 +1,10 @@
+sudo: required
+language: python
+services:
+  - docker
+install:
+    - docker pull quay.io/pypa/manylinux1_x86_64
+script:
+    - docker run -e HDF5_VERSIONS=1.8.3 --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_hdf5s.sh
+    - ls libraries
+
