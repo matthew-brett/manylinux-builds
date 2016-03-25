@@ -20,17 +20,20 @@ if [ -z $CYTHON_VERSIONS ]; then
         0.23 0.23.1 0.23.2 0.23.3 0.23.4"
 fi
 
+# Directory to store wheels
+mkdir unfixed_wheels
+
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP="$(cpython_path $PYTHON)/bin/pip"
     for CYTHON in ${CYTHON_VERSIONS}; do
         echo "Building Cython $CYTHON for Python $PYTHON"
         $PIP install "cython==$CYTHON"
-        $PIP wheel "cython==$CYTHON" -w wheelhouse/
+        $PIP wheel "cython==$CYTHON" -w unfixed_wheels/
     done
 done
 
 # Bundle external shared libraries into the wheels
-for whl in wheelhouse/*.whl; do
+for whl in unfixed_wheels/*.whl; do
     auditwheel repair $whl -w $WHEELHOUSE/
 done
