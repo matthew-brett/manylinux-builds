@@ -4,6 +4,10 @@ IO_PATH="${IO_PATH:-/io}"
 BLAS_SOURCE="${BLAS_SOURCE:-atlas}"
 PYTHON_VERSIONS="${PYTHON_VERSIONS:-2.6 2.7 3.3 3.4 3.5}"
 OPENBLAS_VERSION="${OPENBLAS_VERSION:-0.2.17}"
+# ATLAS_TYPE can be 'default' or 'custom'
+ATLAS_TYPE="${ATLAS_TYPE:-default}"
+# BUILD_SUFFIX appends a string to output library and wheel path
+BUILD_SUFFIX="${BUILD_SUFFIX:-}"
 
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
@@ -57,21 +61,44 @@ EOF
 }
 
 function get_openblas {
-    # Install openblas
-    tar xf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz
+    # Install OpenBLAS
+    local openblas_version="${1:-$OPENBLAS_VERSION}"
+    tar xf $LIBRARIES/openblas_${openblas_version}.tgz
+    # Force scipy to use OpenBLAS regardless of what numpy uses
+    cat << EOF > $HOME/site.cfg
+[openblas]
+library_dirs = /usr/local/lib
+include_dirs = /usr/local/include
+EOF
 }
 
 function get_atlas {
-    add_manylinux_repo
+    # Install ATLAS from custom or default repo
+    local atlas_type="${1:-$ATLAS_TYPE}"
+    if [ "$atlas_type" == "custom" ]; then
+        add_manylinux_repo
+    fi
     yum install -y atlas-devel
+    # Force scipy to use ATLAS regardless of what numpy uses
+    cat << EOF > $HOME/site.cfg
+[atlas]
+library_dirs = /usr/lib64/atlas:/usr/lib/atlas
+include_dirs = /usr/include/atlas
+EOF
 }
 
 function get_blas {
-    if [ "$BLAS_SOURCE" == "atlas" ]; then
+    # Get openblas or atlas
+    local blas_source="${1:-$BLAS_SOURCE}"
+    if [ "$blas_source" == "atlas" ]; then
         get_atlas
-    elif [ "$BLAS_SOURCE" == "openblas" ]; then
+    elif [ "$blas_source" == "openblas" ]; then
         get_openblas
     fi
+}
+
+function gh-clone {
+    git clone https://github.com/$1
 }
 
 function install_auditwheel {
@@ -79,8 +106,9 @@ function install_auditwheel {
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
-WHEELHOUSE=$IO_PATH/wheelhouse
-LIBRARIES=$IO_PATH/libraries
+WHEELHOUSE=$IO_PATH/wheelhouse${BUILD_SUFFIX}
+LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
+
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
 install_auditwheel
