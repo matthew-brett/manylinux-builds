@@ -50,7 +50,7 @@ function cpython_path {
 function add_manylinux_repo {
     cat << EOF > /etc/yum.repos.d/manylinux.repo
 [manylinux1-x86_64]
-name=wheels for manylinux 64-bit image
+name=RPMs for manylinux 64-bit image
 baseurl=https://nipy.bic.berkeley.edu/manylinux/rpms
 gpgcheck=0
 EOF
