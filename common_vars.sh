@@ -3,7 +3,7 @@ IO_PATH="${IO_PATH:-/io}"
 # BLAS_SOURCE can be "atlas" or "openblas"
 BLAS_SOURCE="${BLAS_SOURCE:-atlas}"
 PYTHON_VERSIONS="${PYTHON_VERSIONS:-2.6 2.7 3.3 3.4 3.5}"
-OPENBLAS_VERSION="${OPENBLAS_VERSION:-0.2.16}"
+OPENBLAS_VERSION="${OPENBLAS_VERSION:-0.2.17}"
 
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
