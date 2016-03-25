@@ -106,6 +106,27 @@ function install_auditwheel {
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
+function rm_mkdir {
+    # Remove directory if present, then make directory
+    local path=$1
+    if [ -d "$path" ]; then
+        rm -rf $path
+    fi
+    mkdir $path
+}
+
+function repair_wheelhouse {
+    local in_dir=$1
+    local out_dir=$2
+    for whl in $in_dir/*.whl; do
+        if [[ $whl == *none-any.whl ]]; then
+            cp $whl $out_dir
+        else
+            auditwheel repair $whl -w $out_dir/
+        fi
+    done
+}
+
 WHEELHOUSE=$IO_PATH/wheelhouse${BUILD_SUFFIX}
 LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 

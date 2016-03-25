@@ -22,7 +22,7 @@ CYTHON_VERSION=0.21.2
 get_blas
 
 # Directory to store wheels
-mkdir unfixed_wheels
+rm_mkdir unfixed_wheels
 
 # Get numpy source tree
 git clone io/numpy
@@ -55,6 +55,4 @@ done
 cd ..
 
 # Bundle external shared libraries into the wheels
-for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w $WHEELHOUSE/
-done
+repair_wheelhouse unfixed_wheels $WHEELHOUSE

@@ -40,8 +40,8 @@ cd h5py
 
 # Compile wheels
 TMP_WHEELS=/tmp
-UNFIXED_WHEELS=/io/unfixed
-rm -f $UNFIXED_WHEELS/*
+UNFIXED_WHEELS=$PWD/unfixed
+rm_mkdir $UNFIXED_WHEELS
 for H5PY in ${H5PY_VERSIONS}; do
     git checkout "$H5PY"
     # If we have >=2.4 switch to more recent hdf5

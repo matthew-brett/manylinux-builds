@@ -27,7 +27,7 @@ CYTHON_VERSION=0.22.1
 get_blas
 
 # Directory to store wheels
-mkdir unfixed_wheels
+rm_mkdir unfixed_wheels
 
 # Get scipy source tree
 git clone io/scipy
@@ -36,8 +36,8 @@ cd scipy
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP="$(cpython_path $PYTHON)/bin/pip"
-    $PIP install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
-    PIPI_IO="$PIP install -f $WHEELHOUSE"
+    PIPI_IO="$PIP install -f $WHEELHOUSE -f $MANYLINUX_URL"
+    $PIPI_IO "cython==$CYTHON_VERSION"
     for SCIPY in ${SCIPY_VERSIONS}; do
         # Does Python 3.5 need scipy >= 0.16?
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] &&
@@ -65,6 +65,4 @@ done
 cd ..
 
 # Bundle external shared libraries into the wheels
-for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w $WHEELHOUSE/
-done
+repair_wheelhouse unfixed_wheels $WHEELHOUSE

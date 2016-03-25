@@ -12,7 +12,7 @@ if [ -z "$PANDAS_VERSIONS" ]; then
 fi
 
 # Directory to store wheels
-mkdir unfixed_wheels
+rm_mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
@@ -36,6 +36,4 @@ for PYTHON in ${PYTHON_VERSIONS}; do
 done
 
 # Bundle external shared libraries into the wheels
-for whl in unfixed_wheels/*.whl; do
-    auditwheel repair $whl -w $WHEELHOUSE/
-done
+repair_wheelhouse unfixed_wheels $WHEELHOUSE
