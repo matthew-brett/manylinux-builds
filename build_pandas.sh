@@ -16,7 +16,7 @@ mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP=/opt/${PYTHON}/bin/pip
+    PIP="$(cpython_path $PYTHON)/bin/pip"
     for PANDAS in ${PANDAS_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             np_ver=1.9.0

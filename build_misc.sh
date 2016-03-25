@@ -25,7 +25,7 @@ mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP=/opt/$PYTHON/bin/pip
+    PIP="$(cpython_path $PYTHON)/bin/pip"
     # To satisfy packages depending on numpy distutils in
     # setup.py
     $PIP install numpy

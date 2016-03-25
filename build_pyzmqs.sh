@@ -29,7 +29,7 @@ mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP=/opt/$PYTHON/bin/pip
+    PIP="$(cpython_path $PYTHON)/bin/pip"
     for PYZMQ in ${PYZMQ_VERSIONS}; do
         $PIP wheel "pyzmq==$PYZMQ" -w unfixed_wheels
     done

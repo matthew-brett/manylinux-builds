@@ -51,7 +51,7 @@ for H5PY in ${H5PY_VERSIONS}; do
             && tar zxf $HDF_TGZ2 )
     fi
     for PYTHON in ${PYTHON_VERSIONS}; do
-        PIP=/opt/${PYTHON}/bin/pip
+        PIP="$(cpython_path $PYTHON)/bin/pip"
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             np_ver=1.9.0
         elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ; then

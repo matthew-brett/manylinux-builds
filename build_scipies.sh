@@ -23,8 +23,8 @@ fi
 
 CYTHON_VERSION=0.22.1
 
-# Install openblas
-tar xf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz
+# Install blas
+get_blas
 
 # Directory to store wheels
 mkdir unfixed_wheels
@@ -35,7 +35,7 @@ cd scipy
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP=/opt/$PYTHON/bin/pip
+    PIP="$(cpython_path $PYTHON)/bin/pip"
     $PIP install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
     PIPI_IO="$PIP install -f $WHEELHOUSE"
     for SCIPY in ${SCIPY_VERSIONS}; do

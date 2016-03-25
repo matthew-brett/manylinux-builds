@@ -22,10 +22,11 @@ fi
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
+    PIP="$(cpython_path $PYTHON)/bin/pip"
     for CYTHON in ${CYTHON_VERSIONS}; do
         echo "Building Cython $CYTHON for Python $PYTHON"
-        /opt/${PYTHON}/bin/pip install "cython==$CYTHON"
-        /opt/${PYTHON}/bin/pip wheel "cython==$CYTHON" -w wheelhouse/
+        $PIP install "cython==$CYTHON"
+        $PIP wheel "cython==$CYTHON" -w wheelhouse/
     done
 done
 

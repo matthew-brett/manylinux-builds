@@ -18,8 +18,8 @@ fi
 
 CYTHON_VERSION=0.21.2
 
-# Install openblas
-tar xf $LIBRARIES/openblas_${OPENBLAS_VERSION}.tgz
+# Get blas / lapack
+get_blas
 
 # Directory to store wheels
 mkdir unfixed_wheels
@@ -30,7 +30,8 @@ cd numpy
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    /opt/$PYTHON/bin/pip install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
+    PIP="$(cpython_path $PYTHON)/bin/pip"
+    $PIP install -f $WHEELHOUSE -f $MANYLINUX_URL "cython==$CYTHON_VERSION"
     for NUMPY in ${NUMPY_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] &&
             [ $(lex_ver $NUMPY) -lt $(lex_ver 1.7) ] ; then
@@ -48,7 +49,7 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         if [ -f $patch_file ]; then
             git apply $patch_file
         fi
-        /opt/${PYTHON}/bin/pip wheel -w ../unfixed_wheels .
+        $PIP wheel -w ../unfixed_wheels .
     done
 done
 cd ..
