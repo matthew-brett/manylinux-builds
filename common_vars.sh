@@ -76,7 +76,7 @@ function get_blas {
 
 function install_auditwheel {
     $(cpython_path 3.5)/bin/pip3 install auditwheel
-    ln -s $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
+    ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
 WHEELHOUSE=$IO_PATH/wheelhouse
