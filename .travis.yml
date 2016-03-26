@@ -26,3 +26,15 @@ matrix:
 
 script:
   - docker run -ti --rm -e BLAS_SOURCE=$BLAS -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
+
+before_deploy:
+  - cd wheelhouse-$BLAS
+
+deploy:
+  provider: cloudfiles
+  username: travis-worker
+  api_key:
+     secure: "Sy32flUDpCSlUyDgb6h+cCiD22N5RtxioPumT3cnGsHLPyufLvSFJn9L27ldONOcixAWY1rNHyfxEIPx+nH/fBW3XWG1wlNzsLGPRDaMCrKmRn/LKQ4bF9rsf3NC1AgcOtnAqwmUSNQczWB+jyDIJHjaRmlZN4yJ76VuHmNH0O+A7t05Cboi2yA2Di9iIFNFOCHvFmfysbkJ91o16tW9T+Yg3jeh9IURnJNr1DWAw5HvZ+jvLndhzo9QtU72IylnBeJJLDzHIqDiybNwz0QrRrqRhh/xTyusJF6+CciUre1mw3VLkzU5ExdBZMYES1/0KjmvMefF2xVNuFuFM+9xjfQsf/gxtcpMIfiiFQ9ZUhSX/hKaMFGX14T5TWfKfoykA8gp//e1i9D89qEiuEbtW3Sm7e4p3GmVMC1RcY7GHMrOsS6YhvqTbekMATuj0B2SbG942zSEsiEEJBiGFTC1u9AmPbAxUcjgtHQ0z9C/dkwsMVqujuC5TNQkTYlbNhKao8/z394dOF6B8J4VrGT2DKeEREan515NFh0cqoWx02J0Vs95F8GKjJ9rZ8WGdovrN6PnQR/UyWpIkMeKdZpKfMKTy4Vy1BdOlYiwWQcpWBhI665UBUNOqSwekpECZg+jzAMQYmOHFCTZ8i9wL15NF3Cs+wpADTo5D7OUJCWtrgQ="
+  region: ORD
+  container: manylinux-$BLAS
+  skip_cleanup: true
