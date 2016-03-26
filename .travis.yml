@@ -4,32 +4,22 @@ dist: trusty
 services:
   - docker
 
-matrix:
-  include:
-    - env:
-        - BLAS=openblas
-        - PY_VER=2.7
-    - env:
-        - BLAS=openblas
-        - PY_VER=3.4
-    - env:
-        - BLAS=openblas
-        - PY_VER=3.5
-    - env:
-        - BLAS=atlas
-        - PY_VER=2.7
-    - env:
-        - BLAS=atlas
-        - PY_VER=3.4
-    - env:
-        - BLAS=atlas
-        - PY_VER=3.5
+env:
+    PY_VER=2.7 BLAS=openblas
+    PY_VER=3.4 BLAS=openblas
+    PY_VER=3.5 BLAS=openblas
+    PY_VER=2.7 BLAS=atlas
+    PY_VER=3.4 BLAS=atlas
+    PY_VER=3.5 BLAS=atlas
+    PY_VER=2.7 BLAS=atlas ATLAS_TYPE=custom
+    PY_VER=3.4 BLAS=atlas ATLAS_TYPE=custom
+    PY_VER=3.5 BLAS=atlas ATLAS_TYPE=custom
 
 before_install:
   - docker pull quay.io/pypa/manylinux1_x86_64
 
 script:
-  - docker run --rm -e BLAS_SOURCE=$BLAS -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
+  - docker run --rm -e BLAS_SOURCE=$BLAS -e ATLAS_TYPE=$ATLAS_TYPE -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
 
 before_deploy:
   - cd wheelhouse-$BLAS
@@ -40,5 +30,5 @@ deploy:
   api_key:
      secure: "Sy32flUDpCSlUyDgb6h+cCiD22N5RtxioPumT3cnGsHLPyufLvSFJn9L27ldONOcixAWY1rNHyfxEIPx+nH/fBW3XWG1wlNzsLGPRDaMCrKmRn/LKQ4bF9rsf3NC1AgcOtnAqwmUSNQczWB+jyDIJHjaRmlZN4yJ76VuHmNH0O+A7t05Cboi2yA2Di9iIFNFOCHvFmfysbkJ91o16tW9T+Yg3jeh9IURnJNr1DWAw5HvZ+jvLndhzo9QtU72IylnBeJJLDzHIqDiybNwz0QrRrqRhh/xTyusJF6+CciUre1mw3VLkzU5ExdBZMYES1/0KjmvMefF2xVNuFuFM+9xjfQsf/gxtcpMIfiiFQ9ZUhSX/hKaMFGX14T5TWfKfoykA8gp//e1i9D89qEiuEbtW3Sm7e4p3GmVMC1RcY7GHMrOsS6YhvqTbekMATuj0B2SbG942zSEsiEEJBiGFTC1u9AmPbAxUcjgtHQ0z9C/dkwsMVqujuC5TNQkTYlbNhKao8/z394dOF6B8J4VrGT2DKeEREan515NFh0cqoWx02J0Vs95F8GKjJ9rZ8WGdovrN6PnQR/UyWpIkMeKdZpKfMKTy4Vy1BdOlYiwWQcpWBhI665UBUNOqSwekpECZg+jzAMQYmOHFCTZ8i9wL15NF3Cs+wpADTo5D7OUJCWtrgQ="
   region: ORD
-  container: manylinux-$BLAS
+  container: manylinux-$BLAS$ATLAS_TYPE
   skip_cleanup: true
