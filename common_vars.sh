@@ -125,6 +125,7 @@ function repair_wheelhouse {
             auditwheel repair $whl -w $out_dir/
         fi
     done
+    chmod -R a+rwX $out_dir
 }
 
 WHEELHOUSE=$IO_PATH/wheelhouse${BUILD_SUFFIX}
