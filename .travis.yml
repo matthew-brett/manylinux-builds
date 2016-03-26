@@ -4,16 +4,38 @@ dist: trusty
 services:
   - docker
 
-env:
-    PY_VER=2.7 BLAS=openblas
-    PY_VER=3.4 BLAS=openblas
-    PY_VER=3.5 BLAS=openblas
-    PY_VER=2.7 BLAS=atlas
-    PY_VER=3.4 BLAS=atlas
-    PY_VER=3.5 BLAS=atlas
-    PY_VER=2.7 BLAS=atlas ATLAS_TYPE=custom
-    PY_VER=3.4 BLAS=atlas ATLAS_TYPE=custom
-    PY_VER=3.5 BLAS=atlas ATLAS_TYPE=custom
+matrix:
+  include:
+    - env:
+        - BLAS=openblas
+        - PY_VER=2.7
+    - env:
+        - BLAS=openblas
+        - PY_VER=3.4
+    - env:
+        - BLAS=openblas
+        - PY_VER=3.5
+    - env:
+        - BLAS=atlas
+        - PY_VER=2.7
+    - env:
+        - BLAS=atlas
+        - PY_VER=3.4
+    - env:
+        - BLAS=atlas
+        - PY_VER=3.5
+    - env:
+        - BLAS=atlas
+        - ATLAS_TYPE=custom
+        - PY_VER=2.7
+    - env:
+        - BLAS=atlas
+        - ATLAS_TYPE=custom
+        - PY_VER=3.4
+    - env:
+        - BLAS=atlas
+        - ATLAS_TYPE=custom
+        - PY_VER=3.5
 
 before_install:
   - docker pull quay.io/pypa/manylinux1_x86_64
