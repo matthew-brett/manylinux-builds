@@ -1,5 +1,6 @@
 language: c
 sudo: required
+dist: trusty
 services:
   - docker
 
@@ -24,8 +25,11 @@ matrix:
         - BLAS=atlas
         - PY_VER=3.5
 
+before_install:
+  - docker pull quay.io/pypa/manylinux1_x86_64
+
 script:
-  - docker run -ti --rm -e BLAS_SOURCE=$BLAS -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
+  - docker run --rm -e BLAS_SOURCE=$BLAS -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
 
 before_deploy:
   - cd wheelhouse-$BLAS
