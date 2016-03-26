@@ -17,6 +17,8 @@ for PYTHON in ${PYTHON_VERSIONS}; do
     for NUMEXPR in ${NUMEXPR_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             np_ver=1.9.0
+        elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ; then
+            np_ver=1.7.0
         else
             np_ver=1.6.1
         fi
