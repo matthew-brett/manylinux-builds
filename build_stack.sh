@@ -6,6 +6,7 @@
 export BLAS_SOURCE="${BLAS_SOURCE:-atlas}"
 export ATLAS_TYPE="${ATLAS_TYPE:-default}"
 export BUILD_SUFFIX="${BUILD_SUFFIX:--$BLAS_SOURCE}"
+export CYTHON_VERSIONS="${CYTHON_VERSIONS:-0.23.5}"
 export NUMPY_VERSIONS="${NUMPY_VERSIONS:-1.10.4}"
 export SCIPY_VERSIONS="${SCIPY_VERSIONS:-0.17.0}"
 export SCIKIT_LEARN_VERSIONS="${SCIKIT_LEARN_VERSIONS:-0.17.1}"
@@ -16,6 +17,7 @@ export STATSMODELS_VERSIONS="${STATSMODELS_VERSIONS:-0.6.1}"
 if [ "$BLAS_SOURCE" == "openblas" ]; then
     bash /io/build_openblas.sh
 fi
+bash /io/build_cythons.sh
 bash /io/build_numpies.sh
 bash /io/build_scipies.sh
 bash /io/build_sklearns.sh
