@@ -133,4 +133,3 @@ LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
-install_auditwheel
