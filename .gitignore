@@ -4,3 +4,7 @@ unfixed/
 built_rpms/
 scratch/
 libraries/
+OpenBLAS/
+numpy/
+scipy/
+h5py/
