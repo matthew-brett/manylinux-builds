@@ -35,7 +35,7 @@ tar xf $HDF_TGZ1
 touch hdf5_v1_marker
 
 # Get h5py source tree
-git clone io/h5py
+gh-clone h5py/h5py
 cd h5py
 
 # Compile wheels

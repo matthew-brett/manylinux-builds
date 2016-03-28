@@ -8,7 +8,7 @@ set -e
 
 source /io/common_vars.sh
 
-git clone /io/OpenBLAS
+gh-clone OpenBLAS/OpenBLAS
 cd OpenBLAS
 git checkout "v${OPENBLAS_VERSION}"
 git clean -fxd

@@ -30,7 +30,7 @@ get_blas
 rm_mkdir unfixed_wheels
 
 # Get scipy source tree
-git clone io/scipy
+gh-clone scipy/scipy
 cd scipy
 
 # Compile wheels

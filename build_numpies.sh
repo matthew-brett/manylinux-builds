@@ -25,7 +25,7 @@ get_blas
 rm_mkdir unfixed_wheels
 
 # Get numpy source tree
-git clone io/numpy
+gh-clone numpy/numpy
 cd numpy
 
 # Compile wheels

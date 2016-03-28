@@ -17,7 +17,6 @@ export STATSMODELS_VERSIONS="${STATSMODELS_VERSIONS:-0.6.1}"
 if [ "$BLAS_SOURCE" == "openblas" ]; then
     bash /io/build_openblas.sh
 fi
-bash /io/build_cythons.sh
 bash /io/build_numpies.sh
 bash /io/build_scipies.sh
 bash /io/build_sklearns.sh
