@@ -102,7 +102,7 @@ function gh-clone {
 }
 
 function install_auditwheel {
-    $(cpython_path 3.5)/bin/pip3 install auditwheel
+    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/rmcgibbo/auditwheel@380e5fdbbcff313b312e9e1a37cfb8e7e9e1298a
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
@@ -133,3 +133,4 @@ LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
+install_auditwheel
