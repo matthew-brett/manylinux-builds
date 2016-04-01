@@ -106,6 +106,13 @@ function install_auditwheel {
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
+function install_patched_patchelf {
+    curl -LO $MANYLINUX_URL/patchelf-0.9njs.tar.gz
+    tar zxvf patchelf-0.9njs.tar.gz
+    (cd patchelf-0.9njs && ./configure && make && make install)
+    rm -rf patchelf-0.9njs*
+}
+
 function rm_mkdir {
     # Remove directory if present, then make directory
     local path=$1
@@ -134,3 +141,4 @@ LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
 install_auditwheel
+install_patched_patchelf
