@@ -44,6 +44,7 @@ script:
   - docker run --rm -e BLAS_SOURCE=$BLAS -e ATLAS_TYPE=$ATLAS_TYPE -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
 
 before_deploy:
+  - cp libraries-$BLAS/* wheelhouse-$BLAS
   - cd wheelhouse-$BLAS
 
 deploy:
