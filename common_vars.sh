@@ -107,9 +107,9 @@ function install_auditwheel {
 }
 
 function install_patched_patchelf {
-    curl -LO $MANYLINUX_URL/patchelf-0.9njs.tar.gz
-    tar zxvf patchelf-0.9njs.tar.gz
-    (cd patchelf-0.9njs && ./configure && make && make install)
+    curl -LO $MANYLINUX_URL/patchelf-0.9njs2.tar.gz
+    tar zxvf patchelf-0.9njs2.tar.gz
+    (cd patchelf-0.9njs2 && ./configure && make && make install)
     rm -rf patchelf-0.9njs*
 }
 
