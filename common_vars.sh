@@ -12,9 +12,6 @@ BUILD_SUFFIX="${BUILD_SUFFIX:-}"
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-
 function lex_ver {
     # Echoes dot-separated version string padded with zeros
     # Thus:
@@ -101,18 +98,6 @@ function gh-clone {
     git clone https://github.com/$1
 }
 
-function install_auditwheel {
-    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/rmcgibbo/auditwheel@380e5fdbbcff313b312e9e1a37cfb8e7e9e1298a
-    ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
-}
-
-function install_patched_patchelf {
-    curl -LO $MANYLINUX_URL/patchelf-0.9njs2.tar.gz
-    tar zxvf patchelf-0.9njs2.tar.gz
-    (cd patchelf-0.9njs2 && ./configure && make && make install)
-    rm -rf patchelf-0.9njs*
-}
-
 function rm_mkdir {
     # Remove directory if present, then make directory
     local path=$1
@@ -140,5 +125,3 @@ LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
-install_auditwheel
-install_patched_patchelf
