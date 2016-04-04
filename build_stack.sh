@@ -3,7 +3,7 @@
 #    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
 # or something like:
 #    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
-export BLAS_SOURCE="${BLAS_SOURCE:-atlas}"
+export BLAS_SOURCE="${BLAS_SOURCE:-openblas}"
 export ATLAS_TYPE="${ATLAS_TYPE:-default}"
 export BUILD_SUFFIX="${BUILD_SUFFIX:--$BLAS_SOURCE}"
 export CYTHON_VERSIONS="${CYTHON_VERSIONS:-0.23.5}"
