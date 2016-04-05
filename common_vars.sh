@@ -94,6 +94,15 @@ function get_blas {
     fi
 }
 
+function get_freetype {
+    yum install -y libpng-devel libjpeg-devel
+    curl -LO http://downloads.sourceforge.net/project/freetype/freetype2/2.6.3/freetype-2.6.3.tar.bz2 
+    tar xf freetype-*.tar.bz2
+    (cd / && patch -p0 -N < /io/pngconf.patch)
+    export PNG_SKIP_SETJMP_CHECK=1
+    (cd freetype-* && ./configure && make && make install)
+}
+
 function gh-clone {
     git clone https://github.com/$1
 }

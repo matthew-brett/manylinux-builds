@@ -1,0 +1,18 @@
+--- /usr/include/libpng12/pngconf.h	2012-04-25 12:56:59.000000000 +0000
++++ /tmp/pngconf.h	2016-04-04 23:55:55.580618301 +0000
+@@ -324,6 +324,7 @@
+  * the X config stuff didn't define _BSD_SOURCE we wouldn't need this.
+  */
+ 
++# ifndef PNG_SKIP_SETJMP_CHECK
+ #  ifdef __linux__
+ #    ifdef _BSD_SOURCE
+ #      define PNG_SAVE_BSD_SOURCE
+@@ -337,6 +338,7 @@
+          __dont__ include it again.;
+ #    endif
+ #  endif /* __linux__ */
++# endif /* PNG_SKIP_SETJMP_CHECK */
+ 
+    /* include setjmp.h for error handling */
+ #  include <setjmp.h>
