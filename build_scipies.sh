@@ -21,8 +21,6 @@ if [ -z "$SCIPY_VERSIONS" ]; then
         0.15.0 0.15.1 0.16.0 0.16.1 0.17.0"
 fi
 
-CYTHON_VERSION=0.22.1
-
 # Install blas
 get_blas
 
@@ -37,7 +35,6 @@ cd scipy
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP="$(cpython_path $PYTHON)/bin/pip"
     PIPI_IO="$PIP install -f $WHEELHOUSE -f $MANYLINUX_URL"
-    $PIPI_IO "cython==$CYTHON_VERSION"
     for SCIPY in ${SCIPY_VERSIONS}; do
         # Does Python 3.5 need scipy >= 0.16?
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] &&
@@ -54,6 +51,11 @@ for PYTHON in ${PYTHON_VERSIONS}; do
             $PIPI_IO "numpy==1.7.0"
         else
             $PIPI_IO "numpy==1.6.0"
+        fi
+        if [ $(lex_ver $SCIPY) -lt $(lex_ver 0.14.1) ] ; then
+            $PIPI_IO "cython==0.20.2"
+        else
+            $PIPI_IO "cython==0.24"
         fi
         echo "Building scipy $SCIPY for Python $PYTHON"
         git clean -fxd
