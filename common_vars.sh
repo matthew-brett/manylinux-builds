@@ -8,6 +8,8 @@ OPENBLAS_VERSION="${OPENBLAS_VERSION:-0.2.18}"
 ATLAS_TYPE="${ATLAS_TYPE:-default}"
 # BUILD_SUFFIX appends a string to output library and wheel path
 BUILD_SUFFIX="${BUILD_SUFFIX:-}"
+# UNICODE_WIDTH selects "32"=wide (UCS4) or "16"=narrow (UTF-16) builds
+UNICODE_WIDTH="${UNICODE_WIDTH:-32}"
 
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
@@ -37,12 +39,21 @@ function build_archive {
 function cpython_path {
     # Return path to cpython given
     # * version (of form "2.7")
-    # * u_suff ("" or "u" default "u")
+    # * u_width ("16" or "32" default "32")
+    #
+    # For back-compatibility "u" as u_width also means "32"
     local py_ver="${1:-2.7}"
-    local u_suff="${2:-u}"
+    local u_width="${2:-${UNICODE_WIDTH}}"
+    local u_suff=u
+    # Back-compatibility
+    if [ "$u_width" == "u" ]; then u_width=32; fi
     # For Python >= 3.3, "u" suffix not meaningful
-    if [ $(lex_ver $py_ver) -ge $(lex_ver 3.3) ]; then
+    if [ $(lex_ver $py_ver) -ge $(lex_ver 3.3) ] ||
+        [ "$u_width" == "16" ]; then
         u_suff=""
+    elif [ "$u_width" != "32" ]; then
+        echo "Incorrect u_width value $u_width"
+        # exit 1
     fi
     local no_dots=$(strip_dots $py_ver)
     echo "/opt/python/cp${no_dots}-cp${no_dots}m${u_suff}"

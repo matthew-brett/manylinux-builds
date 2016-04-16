@@ -4,44 +4,32 @@ dist: trusty
 services:
   - docker
 
+env:
+    global:
+        - BLAS=openblas
+
 matrix:
   include:
     - env:
-        - BLAS=openblas
         - PY_VER=2.7
     - env:
-        - BLAS=openblas
         - PY_VER=3.4
     - env:
-        - BLAS=openblas
         - PY_VER=3.5
     - env:
-        - BLAS=atlas
+        - UNICODE_WIDTH=16
         - PY_VER=2.7
-    - env:
-        - BLAS=atlas
-        - PY_VER=3.4
-    - env:
-        - BLAS=atlas
-        - PY_VER=3.5
-    - env:
-        - BLAS=atlas
-        - ATLAS_TYPE=custom
-        - PY_VER=2.7
-    - env:
-        - BLAS=atlas
-        - ATLAS_TYPE=custom
-        - PY_VER=3.4
-    - env:
-        - BLAS=atlas
-        - ATLAS_TYPE=custom
-        - PY_VER=3.5
 
 before_install:
   - docker pull quay.io/pypa/manylinux1_x86_64
 
 script:
-  - docker run --rm -e BLAS_SOURCE=$BLAS -e ATLAS_TYPE=$ATLAS_TYPE -e PYTHON_VERSIONS=$PY_VER -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
+  - docker run --rm
+    -e UNICODE_WIDTH=$UNICODE_WIDTH
+    -e BLAS_SOURCE=$BLAS
+    -e PYTHON_VERSIONS=$PY_VER
+    -v $PWD:/io
+    quay.io/pypa/manylinux1_x86_64 /io/build_stack.sh
 
 before_deploy:
   - cp -r libraries-$BLAS/. wheelhouse-$BLAS
