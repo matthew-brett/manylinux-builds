@@ -114,6 +114,12 @@ function get_freetype {
     (cd freetype-* && ./configure && make && make install)
 }
 
+function update_auditwheel {
+    # Update auditwheel to latest github version
+    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/rmcgibbo/auditwheel@380e5fdbbcff313b312e9e1a37cfb8e7e9e1298a
+    ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
+}
+
 function gh-clone {
     git clone https://github.com/$1
 }
@@ -145,3 +151,4 @@ LIBRARIES=$IO_PATH/libraries${BUILD_SUFFIX}
 
 mkdir -p $WHEELHOUSE
 mkdir -p $LIBRARIES
+update_auditwheel
