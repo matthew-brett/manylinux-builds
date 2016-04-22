@@ -117,7 +117,7 @@ function get_freetype {
 function update_auditwheel {
     # Update auditwheel to a recent github version
     local aw_commit=3db32a73f9058428fe7192e7a584b4a330fe114b
-    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/rmcgibbo/auditwheel@${aw_commit}
+    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/pypa/auditwheel@${aw_commit}
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
