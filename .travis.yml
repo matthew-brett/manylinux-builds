@@ -72,7 +72,7 @@ before_install:
 script:
   - if [ "$PLAT" == "i686" ]; then INTRO_CMD=linux32; fi
   - docker run --rm
-    -e BUILD_SUFFIX=$BLAS
+    -e BUILD_SUFFIX="-$BLAS"
     -e UNICODE_WIDTH=$UNICODE_WIDTH
     -e BLAS_SOURCE=$BLAS
     -e PYTHON_VERSIONS=$PY_VER
