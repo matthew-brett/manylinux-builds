@@ -27,8 +27,8 @@ function rm_archive {
 }
 
 # Paths to library archives
-HDF_TGZ1=$LIBRARIES/hdf5-${HDF5_VERSION_1}.tgz
-HDF_TGZ2=$LIBRARIES/hdf5-${HDF5_VERSION_2}.tgz
+HDF_TGZ1=$LIBRARIES/hdf5-${HDF5_VERSION_1}-${COMPILER_TARGET}.tgz
+HDF_TGZ2=$LIBRARIES/hdf5-${HDF5_VERSION_2}-${COMPILER_TARGET}.tgz
 
 # Unpack the first hdf5 library
 tar xf $HDF_TGZ1

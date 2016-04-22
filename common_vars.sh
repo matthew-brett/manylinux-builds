@@ -14,6 +14,20 @@ UNICODE_WIDTH="${UNICODE_WIDTH:-32}"
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
 
+function compiler_target {
+    touch _test.c
+    gcc -c _test.c
+    local file_test=$(file _test.o)
+    rm -f _test.c _test.o
+    if [[ $file_test =~ "ELF 32-bit" ]]; then
+        echo 'i686'
+    elif [[ $file_test =~ "ELF 64-bit" ]]; then
+        echo 'x86_64'
+    fi
+}
+
+COMPILER_TARGET=$(compiler_target)
+
 function lex_ver {
     # Echoes dot-separated version string padded with zeros
     # Thus:
@@ -71,7 +85,7 @@ EOF
 function get_openblas {
     # Install OpenBLAS
     local openblas_version="${1:-$OPENBLAS_VERSION}"
-    tar xf $LIBRARIES/openblas_${openblas_version}.tgz
+    tar xf $LIBRARIES/openblas_${openblas_version}-${COMPILER_TARGET}.tgz
     # Force scipy to use OpenBLAS regardless of what numpy uses
     cat << EOF > $HOME/site.cfg
 [openblas]
