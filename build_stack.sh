@@ -23,4 +23,3 @@ bash /io/build_sklearns.sh
 bash /io/build_pandas.sh
 bash /io/build_numexprs.sh
 bash /io/build_statsmodels.sh
-bash /io/build_skimages.sh

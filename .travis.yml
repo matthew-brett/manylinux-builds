@@ -8,6 +8,7 @@ env:
     global:
         - BLAS=openblas
         - PLAT=x86_64
+        - SCRIPT=build_stack.sh
 
 matrix:
   include:
@@ -33,6 +34,22 @@ matrix:
         - UNICODE_WIDTH=16
         - PY_VER=2.7
         - PLAT=i686
+    - env:
+        - PY_VER="2.7 3.4 3.5"
+        - SCRIPT=build_skimages.sh
+    - env:
+        - UNICODE_WIDTH=16
+        - PY_VER=2.7
+        - SCRIPT=build_skimages.sh
+    - env:
+        - PY_VER="2.7 3.4 3.5"
+        - PLAT=i686
+        - SCRIPT=build_skimages.sh
+    - env:
+        - UNICODE_WIDTH=16
+        - PY_VER=2.7
+        - PLAT=i686
+        - SCRIPT=build_skimages.sh
 
 before_install:
   - DOCKER_IMAGE=quay.io/pypa/manylinux1_$PLAT
@@ -45,7 +62,7 @@ script:
     -e BLAS_SOURCE=$BLAS
     -e PYTHON_VERSIONS=$PY_VER
     -v $PWD:/io
-    $DOCKER_IMAGE $INTRO_CMD /io/build_stack.sh
+    $DOCKER_IMAGE $INTRO_CMD /io/$SCRIPT
 
 before_deploy:
   - cp -r libraries-$BLAS/. wheelhouse-$BLAS
