@@ -80,7 +80,7 @@ script:
 
 before_deploy:
   - if [ -d libraries-$BLAS ]; then
-    cp -r libraries-$BLAS/. wheelhouse-$BLAS
+    cp -r libraries-$BLAS/. wheelhouse-$BLAS;
     fi
   - cd wheelhouse-$BLAS
 
