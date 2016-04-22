@@ -10,9 +10,6 @@ fi
 
 CYTHON_VERSION=0.23.4
 
-# Install blas
-get_blas
-
 get_freetype
 
 # Directory to store wheels
