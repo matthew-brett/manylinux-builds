@@ -72,6 +72,7 @@ before_install:
 script:
   - if [ "$PLAT" == "i686" ]; then INTRO_CMD=linux32; fi
   - docker run --rm
+    -e BUILD_SUFFIX=$BLAS
     -e UNICODE_WIDTH=$UNICODE_WIDTH
     -e BLAS_SOURCE=$BLAS
     -e PYTHON_VERSIONS=$PY_VER
@@ -79,9 +80,7 @@ script:
     $DOCKER_IMAGE $INTRO_CMD /io/$SCRIPT
 
 before_deploy:
-  - if [ -d libraries-$BLAS ]; then
-    cp -r libraries-$BLAS/. wheelhouse-$BLAS;
-    fi
+  - cp -r libraries-$BLAS/. wheelhouse-$BLAS
   - cd wheelhouse-$BLAS
 
 deploy:
