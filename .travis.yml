@@ -79,7 +79,9 @@ script:
     $DOCKER_IMAGE $INTRO_CMD /io/$SCRIPT
 
 before_deploy:
-  - cp -r libraries-$BLAS/. wheelhouse-$BLAS
+  - if [ -d libraries-$BLAS ]; then
+    cp -r libraries-$BLAS/. wheelhouse-$BLAS
+    fi
   - cd wheelhouse-$BLAS
 
 deploy:

@@ -35,8 +35,11 @@ for PYTHON in ${PYTHON_VERSIONS}; do
             "numpy==$NUMPY_VERSION" "scipy==$SCIPY_VERSION"
         $PIP install -f tmp "numpy==$NUMPY_VERSION" "scipy==$SCIPY_VERSION"
         # Add numpy and scipy  to requirements to avoid upgrading
-        $PIP wheel -f tmp -w unfixed_wheels "numpy==$NUMPY_VERSION" \
-            "scipy==$SCIPY_VERSION" "scikit-image==$SCIKIT_IMAGE"
+        $PIP wheel -f tmp -w unfixed_wheels \
+            --no-binary scikit-image \
+            "numpy==$NUMPY_VERSION" \
+            "scipy==$SCIPY_VERSION" \
+            "scikit-image==$SCIKIT_IMAGE"
     done
 done
 
