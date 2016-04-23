@@ -10,7 +10,9 @@ fi
 
 CYTHON_VERSION=0.23.4
 
-get_freetype
+source /io/library_builders.sh
+build_jpeg
+build_freetype
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
