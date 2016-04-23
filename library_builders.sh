@@ -9,6 +9,7 @@ OPENJPEG_VERSION=2.1
 LCMS2_VERSION=2.7
 GIFLIB_VERSION=5.1.3
 LIBWEBP_VERSION=0.5.0
+XZ_VERSION=5.2.2
 
 function build_simple {
     local name=$1
@@ -26,7 +27,10 @@ function build_simple {
 }
 
 function build_zlib {
+    # Gives an old but safe version
+    if [ -e zlib-stamp ]; then return; fi
     yum install -y zlib-devel
+    touch zlib-stamp
 }
 
 function build_new_zlib {
@@ -56,7 +60,10 @@ function build_bzip2 {
 }
 
 function build_tiff {
+    build_zlib
     build_jpeg
+    build_openjpeg
+    build_xz
     build_simple tiff $TIFF_VERSION ftp://ftp.remotesensing.org/pub/libtiff
 }
 
@@ -70,9 +77,7 @@ function build_openjpeg {
 }
 
 function build_lcms2 {
-    build_zlib
     build_tiff
-    build_jpeg
     build_simple lcms2 $LCMS2_VERSION http://downloads.sourceforge.net/project/lcms/lcms/$LCMS2_VERSION
 }
 
@@ -80,11 +85,14 @@ function build_giflib {
     build_simple giflib $GIFLIB_VERSION http://downloads.sourceforge.net/project/giflib
 }
 
+function build_xz {
+    build_simple xz $XZ_VERSION http://tukaani.org/xz
+}
+
 function build_libwebp {
     if [ -e libwebp-stamp ]; then return; fi
     build_libpng
     build_tiff
-    build_jpeg
     build_giflib
     curl -LO https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${LIBWEBP_VERSION}.tar.gz
     tar zxf libwebp-${LIBWEBP_VERSION}.tar.gz

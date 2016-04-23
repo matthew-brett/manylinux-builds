@@ -15,12 +15,13 @@ if [ -z "$PILLOW_VERSIONS" ]; then
 fi
 
 source /io/library_builders.sh
-build_libpng
 build_jpeg
 build_tiff
 build_openjpeg
 build_lcms2
 build_libwebp
+build_freetype
+yum install -y tk-devel
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
