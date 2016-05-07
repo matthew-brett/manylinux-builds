@@ -17,6 +17,9 @@ fi
 
 source /io/build_mpl_libs.sh
 
+# Build against ancient tcl/tk
+yum install -y tk-devel
+
 # Directory to store wheels
 rm_mkdir unfixed_wheels
 
@@ -40,3 +43,7 @@ done
 
 # Bundle external shared libraries into the wheels
 repair_wheelhouse unfixed_wheels $WHEELHOUSE
+
+# Remove lib depends on tcl / tk in favor of in-process resolution after
+# Tkinter import.
+$(shebang_for auditwheel) /io/untcl_wheels.py $WHEELHOUSE/*.whl
