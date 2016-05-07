@@ -119,6 +119,19 @@ function get_blas {
     fi
 }
 
+function shebang_for {
+    # Return application after shebang line for script
+    # Parameters
+    #    binary_name
+    local bin_path=$(which $1)
+    if [ -z "$bin_path" ]; then
+        echo "$1 not on path"
+        exit 1
+    fi
+    local bin_shebang=$(head -1 $bin_path)
+    echo ${bin_shebang:2}
+}
+
 function update_auditwheel {
     # Update auditwheel to a recent github version
     local aw_commit=3db32a73f9058428fe7192e7a584b4a330fe114b
