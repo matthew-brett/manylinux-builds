@@ -67,7 +67,7 @@ function cpython_path {
         u_suff=""
     elif [ "$u_width" != "32" ]; then
         echo "Incorrect u_width value $u_width"
-        # exit 1
+        exit 1
     fi
     local no_dots=$(strip_dots $py_ver)
     echo "/opt/python/cp${no_dots}-cp${no_dots}m${u_suff}"
