@@ -23,6 +23,10 @@ yum install -y tk-devel
 # Directory to store wheels
 rm_mkdir unfixed_wheels
 
+# Get matplotlib source tree
+gh-clone matplotlib/matplotlib
+cd matplotlib
+
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP="$(cpython_path $PYTHON)/bin/pip"
@@ -35,9 +39,16 @@ for PYTHON in ${PYTHON_VERSIONS}; do
             NUMPY_VERSION=1.6.2
         fi
         echo "Building matplotlib $MATPLOTLIB for Python $PYTHON"
+        git clean -fxd
+        git reset --hard
+        git checkout "v$MATPLOTLIB"
         $PIP install "numpy==$NUMPY_VERSION"
-        $PIP wheel --no-deps -w unfixed_wheels \
-            "matplotlib==$MATPLOTLIB"
+        # Add patch for TCL / Tk runtime loading
+        patch_file="/io/mpl-tkagg-${MATPLOTLIB}.patch"
+        if [ -f $patch_file ]; then
+            git apply $patch_file
+        fi
+        $PIP wheel --no-deps -w ../unfixed_wheels .
     done
 done
 
