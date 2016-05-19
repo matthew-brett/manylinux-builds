@@ -64,6 +64,36 @@ matrix:
         - PY_VER=2.7
         - PLAT=i686
         - SCRIPT=build_skimages.sh
+    - env:
+        - PY_VER=2.7
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - PY_VER=3.4
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - PY_VER=3.5
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - UNICODE_WIDTH=16
+        - PY_VER=2.7
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - PY_VER=2.7
+        - PLAT=i686
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - PY_VER=3.4
+        - PLAT=i686
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - PY_VER=3.5
+        - PLAT=i686
+        - SCRIPT=build_matplotlibs.sh
+    - env:
+        - UNICODE_WIDTH=16
+        - PY_VER=2.7
+        - PLAT=i686
+        - SCRIPT=build_matplotlibs.sh
 
 before_install:
   - DOCKER_IMAGE=quay.io/pypa/manylinux1_$PLAT
