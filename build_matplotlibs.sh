@@ -51,6 +51,8 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         $PIP wheel --no-deps -w ../unfixed_wheels .
     done
 done
+cd ..
+
 
 # Bundle external shared libraries into the wheels
 repair_wheelhouse unfixed_wheels $WHEELHOUSE
