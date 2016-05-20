@@ -1,8 +1,23 @@
+diff --git a/setup.py b/setup.py
+index 4856e1c..ab28c08 100644
+--- a/setup.py
++++ b/setup.py
+@@ -52,9 +52,7 @@ from distutils.dist import Distribution
+ import setupext
+ from setupext import print_line, print_raw, print_message, print_status
+ 
+-# Get the version from versioneer
+-import versioneer
+-__version__ = versioneer.get_version()
++__version__ = "1.5.0"
+ 
+ 
+ # These are the packages in the order we want to display them.  This
 diff --git a/setupext.py b/setupext.py
-index e68b8cd..593fdd1 100755
+index dd872fd..c942d17 100755
 --- a/setupext.py
 +++ b/setupext.py
-@@ -1491,11 +1491,10 @@ class BackendTkAgg(OptionalBackendPackage):
+@@ -1499,11 +1499,10 @@ class BackendTkAgg(OptionalBackendPackage):
              major, minor1, minor2, s, tmp = sys.version_info
              if sys.version_info[0:2] < (3, 4):
                  ext.include_dirs.extend(['win32_static/include/tcl85'])
@@ -16,7 +31,7 @@ index e68b8cd..593fdd1 100755
  
          elif sys.platform == 'darwin':
              # this config section lifted directly from Imaging - thanks to
-@@ -1540,10 +1539,7 @@ class BackendTkAgg(OptionalBackendPackage):
+@@ -1548,10 +1547,7 @@ class BackendTkAgg(OptionalBackendPackage):
                  # not found...
  
                  # tk_include_dirs.append('/usr/X11R6/include')
@@ -27,7 +42,7 @@ index e68b8cd..593fdd1 100755
  
          # you're still here? ok we'll try it this way...
          else:
-@@ -1576,8 +1572,6 @@ class BackendTkAgg(OptionalBackendPackage):
+@@ -1584,8 +1580,6 @@ class BackendTkAgg(OptionalBackendPackage):
              (tcl_lib_dir, tcl_inc_dir, tcl_lib,
               tk_lib_dir, tk_inc_dir, tk_lib) = result
              ext.include_dirs.extend([tcl_inc_dir, tk_inc_dir])
