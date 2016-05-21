@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index c8665a7..b416d6d 100644
+index c8665a7..e0cdbef 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -52,9 +52,7 @@ from distutils.dist import Distribution
@@ -13,6 +13,15 @@ index c8665a7..b416d6d 100644
  
  
  # These are the packages in the order we want to display them.  This
+@@ -132,7 +130,7 @@ class NoopTestCommand(TestCommand):
+         print("Matplotlib does not support running tests with "
+               "'python setup.py test'. Please run 'python tests.py'")
+ 
+-cmdclass = versioneer.get_cmdclass()
++cmdclass = {}
+ cmdclass['test'] = NoopTestCommand
+ 
+ # One doesn't normally see `if __name__ == '__main__'` blocks in a setup.py,
 diff --git a/setupext.py b/setupext.py
 index e68b8cd..593fdd1 100755
 --- a/setupext.py

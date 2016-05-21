@@ -1,5 +1,5 @@
 diff --git a/setup.py b/setup.py
-index 4856e1c..ab28c08 100644
+index 4856e1c..4ce4d59 100644
 --- a/setup.py
 +++ b/setup.py
 @@ -52,9 +52,7 @@ from distutils.dist import Distribution
@@ -13,6 +13,15 @@ index 4856e1c..ab28c08 100644
  
  
  # These are the packages in the order we want to display them.  This
+@@ -235,7 +233,7 @@ class NoseTestCommand(TestCommand):
+                   argv=['nosetests'] + self.test_args,
+                   exit=True)
+ 
+-cmdclass = versioneer.get_cmdclass()
++cmdclass = {}
+ cmdclass['test'] = NoseTestCommand
+ 
+ # One doesn't normally see `if __name__ == '__main__'` blocks in a setup.py,
 diff --git a/setupext.py b/setupext.py
 index dd872fd..c942d17 100755
 --- a/setupext.py
