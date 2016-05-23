@@ -53,10 +53,5 @@ for PYTHON in ${PYTHON_VERSIONS}; do
 done
 cd ..
 
-
 # Bundle external shared libraries into the wheels
 repair_wheelhouse unfixed_wheels $WHEELHOUSE
-
-# Remove lib depends on tcl / tk in favor of in-process resolution after
-# Tkinter import.
-$(shebang_for auditwheel) /io/untcl_wheels.py $WHEELHOUSE/*.whl
