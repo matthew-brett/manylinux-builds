@@ -12,7 +12,6 @@ export SCIPY_VERSIONS="${SCIPY_VERSIONS:-0.17.1}"
 export SCIKIT_LEARN_VERSIONS="${SCIKIT_LEARN_VERSIONS:-0.17.1}"
 export PANDAS_VERSIONS="${PANDAS_VERSIONS:-0.18.0}"
 export NUMEXPR_VERSIONS="${NUMEXPR_VERSIONS:-2.5.1}"
-export STATSMODELS_VERSIONS="${STATSMODELS_VERSIONS:-0.6.1}"
 
 if [ "$BLAS_SOURCE" == "openblas" ]; then
     bash /io/build_openblas.sh
@@ -22,4 +21,3 @@ bash /io/build_scipies.sh
 bash /io/build_sklearns.sh
 bash /io/build_pandas.sh
 bash /io/build_numexprs.sh
-bash /io/build_statsmodels.sh
