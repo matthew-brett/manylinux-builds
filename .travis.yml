@@ -10,14 +10,14 @@ env:
         - PLAT=x86_64
         - SCRIPT=build_stack.sh
         - CYTHON_VERSIONS="0.24"
-        - NUMPY_VERSIONS="1.11.0"
+        - NUMPY_VERSIONS="1.11.1rc1"
         - SCIPY_VERSIONS="0.17.1"
         - SCIKIT_LEARN_VERSIONS="0.17.1"
         - PANDAS_VERSIONS="0.18.0"
         - NUMEXPR_VERSIONS="2.5.1"
         - STATSMODELS_VERSIONS="0.6.1"
         - SCIKIT_IMAGE_VERSIONS="0.12.3"
-        - MATPLOTLIB_VERSIONS="1.5.1"
+        - MATPLOTLIB_VERSIONS="1.5.2rc2"
 
 matrix:
   include:
