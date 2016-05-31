@@ -17,7 +17,7 @@ env:
         - NUMEXPR_VERSIONS="2.5.1"
         - STATSMODELS_VERSIONS="0.6.1"
         - SCIKIT_IMAGE_VERSIONS="0.12.3"
-        - MATPLOTLIB_VERSIONS="1.5.2rc2"
+        - MATPLOTLIB_VERSIONS="2.0.0b1"
 
 matrix:
   include:
