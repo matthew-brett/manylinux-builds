@@ -15,6 +15,9 @@ if [ -z "$MATPLOTLIB_VERSIONS" ]; then
         1.4.2 1.4.3 1.5.0 1.5.1"
 fi
 
+# Use local freetype for versions which support it
+export MPLLOCALFREETYPE=1
+
 source /io/build_mpl_libs.sh
 
 # Build against ancient tcl/tk
