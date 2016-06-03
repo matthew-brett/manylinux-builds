@@ -22,7 +22,7 @@ ZMQ_VERSION=4.1.4
 build_archive libsodium-${LIBSODIUM_VERSION} https://download.libsodium.org/libsodium/releases
 
 # Build zmq
-build_archive zeromq-${ZMQ_VERSION} http://download.zeromq.org
+build_archive zeromq-${ZMQ_VERSION} https://github.com/zeromq/zeromq4-1/releases/download/v${ZMQ_VERSION}
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
