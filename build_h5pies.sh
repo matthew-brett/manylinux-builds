@@ -39,7 +39,6 @@ gh-clone h5py/h5py
 cd h5py
 
 # Compile wheels
-TMP_WHEELS=/tmp
 UNFIXED_WHEELS=$PWD/unfixed
 rm_mkdir $UNFIXED_WHEELS
 for H5PY in ${H5PY_VERSIONS}; do
@@ -60,13 +59,11 @@ for H5PY in ${H5PY_VERSIONS}; do
             np_ver=1.6.1
         fi
         # Put numpy, cython version into the wheelhouse to avoid rebuilding
-        $PIP wheel -f $WHEELHOUSE -f $MANYLINUX_URL -w $TMP_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION"
-        $PIP install -f $TMP_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION"
+        $PIP install "numpy==$np_ver" "cython==$CYTHON_VERSION"
         echo "Building h5py $H5PY for Python $PYTHON"
         git clean -fxd
         git reset --hard
-        # Add numpy / cython to requirements to avoid upgrading numpy version
-        $PIP wheel -f $TMP_WHEELS -w $UNFIXED_WHEELS "numpy==$np_ver" "cython==$CYTHON_VERSION" .
+        $PIP wheel --no-deps -w $UNFIXED_WHEELS .
         # Bundle external shared libraries into the wheels
         # Do this while we still have the matching hdf5 libraries
         for whl in $UNFIXED_WHEELS/h5py-*.whl; do
