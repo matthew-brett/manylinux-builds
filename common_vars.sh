@@ -10,7 +10,7 @@ ATLAS_TYPE="${ATLAS_TYPE:-default}"
 BUILD_SUFFIX="${BUILD_SUFFIX:-}"
 # UNICODE_WIDTH selects "32"=wide (UCS4) or "16"=narrow (UTF-16) builds
 UNICODE_WIDTH="${UNICODE_WIDTH:-32}"
-# Auditwheel commit to update to, if any
+# Auditwheel commit to update to, if updating
 # AUDITWHEEL_COMMIT=3db32a73f9058428fe7192e7a584b4a330fe114b
 
 # Probably don't want to change the stuff below this line
@@ -144,9 +144,10 @@ function shebang_for {
 }
 
 function update_auditwheel {
-    # Update auditwheel to a recent github version
-    if [ -z "$AUDITWHEEL_COMMIT" ]; then return; fi
-    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/pypa/auditwheel@${AUDITWHEEL_COMMIT}
+    # Update auditwheel if necessary
+    local aw_commit=${1:-$AUDITWHEEL_COMMIT}
+    if [ -z "$aw_commit" ]; then return; fi
+    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/pypa/auditwheel@${aw_commit}
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
