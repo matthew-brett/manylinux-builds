@@ -34,7 +34,7 @@ WHEELHOUSE=/io/wheelhouse
 # Compile wheels
 for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
     PIP="$(cpython_path $PYTHON_VERSION $UNICODE_WIDTH)/bin/pip"
-    if [ -n $BUILD_DEPENDS ]; then
+    if [ -n "$BUILD_DEPENDS" ]; then
         $PIP install -f $MANYLINUX_URL $BUILD_DEPENDS
     fi
     git checkout $BUILD_COMMIT
