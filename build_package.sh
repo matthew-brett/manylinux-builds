@@ -40,7 +40,7 @@ for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
     git checkout $BUILD_COMMIT
     git clean -fxd
     git reset --hard
-    $PIP wheel -w /unfixed_wheels --no-deps .
+    $PIP wheel -f $MANYLINUX_URL -w /unfixed_wheels --no-deps .
 done
 
 # Bundle external shared libraries into the wheels
