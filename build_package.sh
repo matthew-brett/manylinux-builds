@@ -1,5 +1,6 @@
 #!/bin/bash
 # Depends on:
+#   UTIL_DIR
 #   REPO_DIR
 #   PYTHON_VERSION
 #   BUILD_COMMIT
@@ -8,7 +9,7 @@
 set -e
 
 # Manylinux, openblas version, lex_ver, Python versions
-source /io/manylinux/common_vars.sh
+source /io/$UTIL_DIR/common_vars.sh
 
 # Unicode widths
 def_widths=$(default_unicode_widths $PYTHON_VERSION)
@@ -17,7 +18,7 @@ UNICODE_WIDTHS=${UNICODE_WIDTHS:-$def_widths}
 # Do any building prior to package building
 if [ -n "$BUILD_PRE_SCRIPT" ]; then
     # Library building tools
-    source /io/manylinux/library_builders.sh
+    source /io/$UTIL_DIR/library_builders.sh
     # Pre-package build script
     source $BUILD_PRE_SCRIPT
 fi
