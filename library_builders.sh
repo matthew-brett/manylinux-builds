@@ -10,6 +10,7 @@ LCMS2_VERSION="${LCMS2_VERSION:-2.7}"
 GIFLIB_VERSION="${GIFLIB_VERSION:-5.1.3}"
 LIBWEBP_VERSION="${LIBWEBP_VERSION:-0.5.0}"
 XZ_VERSION="${XZ_VERSION:-5.2.2}"
+LIBYAML_VERSION="${LIBYAML_VERSION:-0.1.5}"
 
 function build_simple {
     local name=$1
@@ -106,4 +107,8 @@ function build_freetype {
     build_libpng
     build_bzip2
     build_simple freetype $FREETYPE_VERSION http://download.savannah.gnu.org/releases/freetype
+}
+
+function build_libyaml {
+    build_simple yaml $LIBYAML_VERSION http://pyyaml.org/download/libyaml
 }
