@@ -18,10 +18,10 @@ fi
 # Use local freetype for versions which support it
 export MPLLOCALFREETYPE=1
 
-source /io/build_mpl_libs.sh
+# Unicode width
+UNICODE_WIDTH=${UNICODE_WIDTH:-32}
 
-# Build against ancient tcl/tk
-yum install -y tk-devel
+source /io/build_mpl_libs.sh
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
@@ -32,7 +32,7 @@ cd matplotlib
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP="$(cpython_path $PYTHON)/bin/pip"
+    PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
     for MATPLOTLIB in ${MATPLOTLIB_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             NUMPY_VERSION=1.9.1
@@ -45,7 +45,7 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         git clean -fxd
         git reset --hard
         git checkout "v$MATPLOTLIB"
-        $PIP install "numpy==$NUMPY_VERSION"
+        $PIP install -f $MANYLINUX_URL "numpy==$NUMPY_VERSION"
         # Add patch for TCL / Tk runtime loading
         patch_file="/io/mpl-tkagg-${MATPLOTLIB}.patch"
         if [ -f $patch_file ]; then
