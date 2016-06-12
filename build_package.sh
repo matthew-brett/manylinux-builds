@@ -12,8 +12,7 @@ set -e
 source /io/$UTIL_DIR/common_vars.sh
 
 # Unicode widths
-def_widths=$(default_unicode_widths $PYTHON_VERSION)
-UNICODE_WIDTHS=${UNICODE_WIDTHS:-$def_widths}
+UNICODE_WIDTHS=${UNICODE_WIDTHS:-$32}
 
 # Do any building prior to package building
 if [ -n "$BUILD_PRE_SCRIPT" ]; then
