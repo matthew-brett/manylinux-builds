@@ -22,6 +22,9 @@ if [ -n "$BUILD_PRE_SCRIPT" ]; then
     source $BUILD_PRE_SCRIPT
 fi
 
+# Directory to store wheels
+rm_mkdir /unfixed_wheels
+
 # Enter source tree
 cd /io/$REPO_DIR
 
@@ -36,8 +39,8 @@ for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
     git checkout $BUILD_COMMIT
     git clean -fxd
     git reset --hard
-    $PIP wheel -w $WHEELHOUSE --no-deps .
+    $PIP wheel -w /unfixed_wheels --no-deps .
 done
 
 # Bundle external shared libraries into the wheels
-repair_wheelhouse $WHEELHOUSE $WHEELHOUSE
+repair_wheelhouse /unfixed_wheels $WHEELHOUSE
