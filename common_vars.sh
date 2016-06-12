@@ -50,6 +50,15 @@ function build_archive {
     rm -rf $pkg_root
 }
 
+function default_unicode_widths {
+    local py_ver="${1:-2.7}"
+    if [ $(lex_ver "$py_ver") -le $(lex_ver 3) ]; then
+        echo "64 32"
+    else
+        echo "64"
+    fi
+}
+
 function cpython_path {
     # Return path to cpython given
     # * version (of form "2.7")
