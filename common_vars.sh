@@ -10,6 +10,8 @@ ATLAS_TYPE="${ATLAS_TYPE:-default}"
 BUILD_SUFFIX="${BUILD_SUFFIX:-}"
 # UNICODE_WIDTH selects "32"=wide (UCS4) or "16"=narrow (UTF-16) builds
 UNICODE_WIDTH="${UNICODE_WIDTH:-32}"
+# Auditwheel commit to update to, if any
+# AUDITWHEEL_COMMIT=3db32a73f9058428fe7192e7a584b4a330fe114b
 
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
@@ -143,8 +145,8 @@ function shebang_for {
 
 function update_auditwheel {
     # Update auditwheel to a recent github version
-    local aw_commit=3db32a73f9058428fe7192e7a584b4a330fe114b
-    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/pypa/auditwheel@${aw_commit}
+    if [ -z "$AUDITWHEEL_COMMIT" ]; then return; fi
+    $(cpython_path 3.5)/bin/pip3 install git+https://github.com/pypa/auditwheel@${AUDITWHEEL_COMMIT}
     ln -sf $(cpython_path 3.5)/bin/auditwheel /usr/local/bin
 }
 
