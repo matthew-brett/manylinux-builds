@@ -55,9 +55,9 @@ function build_archive {
 function default_unicode_widths {
     local py_ver="${1:-2.7}"
     if [ $(lex_ver "$py_ver") -le $(lex_ver 3) ]; then
-        echo "64 32"
+        echo "32 16"
     else
-        echo "64"
+        echo "32"
     fi
 }
 
