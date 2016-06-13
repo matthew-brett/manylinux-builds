@@ -49,6 +49,7 @@ for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
         git checkout $BUILD_COMMIT
         git clean -fxd
         git reset --hard
+        git submodule update --init --recursive
     fi
     $PIP wheel -f $MANYLINUX_URL -w /unfixed_wheels --no-deps $build_source
 done
