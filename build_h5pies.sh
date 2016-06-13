@@ -17,6 +17,9 @@ fi
 
 source /io/common_vars.sh
 
+# Unicode width
+UNICODE_WIDTH=${UNICODE_WIDTH:-32}
+
 CYTHON_VERSION=0.22.1
 HDF5_VERSION_1=1.8.3
 HDF5_VERSION_2=1.8.16
@@ -50,7 +53,7 @@ for H5PY in ${H5PY_VERSIONS}; do
             && tar zxf $HDF_TGZ2 )
     fi
     for PYTHON in ${PYTHON_VERSIONS}; do
-        PIP="$(cpython_path $PYTHON)/bin/pip"
+        PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             np_ver=1.9.0
         elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ; then
@@ -58,7 +61,6 @@ for H5PY in ${H5PY_VERSIONS}; do
         else
             np_ver=1.6.1
         fi
-        # Put numpy, cython version into the wheelhouse to avoid rebuilding
         $PIP install "numpy==$np_ver" "cython==$CYTHON_VERSION"
         echo "Building h5py $H5PY for Python $PYTHON"
         git clean -fxd
