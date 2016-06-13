@@ -15,8 +15,6 @@ if [ -z "$H5PY_VERSIONS" ]; then
     H5PY_VERSIONS="2.2.0 2.2.1 2.3.0 2.3.1 2.4.0 2.5.0 2.6.0"
 fi
 
-source /io/common_vars.sh
-
 # Unicode width
 UNICODE_WIDTH=${UNICODE_WIDTH:-32}
 

@@ -21,6 +21,9 @@ if [ -z "$SCIPY_VERSIONS" ]; then
         0.15.0 0.15.1 0.16.0 0.16.1 0.17.0"
 fi
 
+# Unicode width
+UNICODE_WIDTH=${UNICODE_WIDTH:-32}
+
 # Install blas
 get_blas
 
@@ -33,7 +36,7 @@ cd scipy
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP="$(cpython_path $PYTHON)/bin/pip"
+    PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
     PIPI_IO="$PIP install -f $WHEELHOUSE -f $MANYLINUX_URL"
     for SCIPY in ${SCIPY_VERSIONS}; do
         # Does Python 3.5 need scipy >= 0.16?
