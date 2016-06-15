@@ -21,7 +21,7 @@ if [ -n "$BUILD_PRE_SCRIPT" ]; then
     # Library building tools
     source $MY_DIR/library_builders.sh
     # Pre-package build script
-    source $BUILD_PRE_SCRIPT
+    source /io/$BUILD_PRE_SCRIPT
 fi
 
 # Directory to store wheels
