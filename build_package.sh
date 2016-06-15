@@ -4,7 +4,7 @@
 #       (REPO_DIR for in source build; PKG_SPEC for pip build)
 #   PYTHON_VERSION
 #   BUILD_COMMIT
-#   UNICODE_WIDTHS  (can be empty)
+#   UNICODE_WIDTH  (can be empty)
 #   BUILD_DEPENDS  (can be empty)
 set -e
 
@@ -13,7 +13,7 @@ MY_DIR=$(dirname "${BASH_SOURCE[0]}")
 source $MY_DIR/common_vars.sh
 
 # Unicode widths
-UNICODE_WIDTHS=${UNICODE_WIDTHS:-32}
+UNICODE_WIDTH=${UNICODE_WIDTH:-32}
 WHEEL_SDIR=${WHEEL_SDIR:-wheelhouse}
 
 # Do any building prior to package building
@@ -41,8 +41,8 @@ fi
 WHEELHOUSE=/io/$WHEEL_SDIR
 
 # Compile wheels
-for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
-    PIP="$(cpython_path $PYTHON_VERSION $UNICODE_WIDTH)/bin/pip"
+for width in ${UNICODE_WIDTH}; do
+    PIP="$(cpython_path $PYTHON_VERSION $width)/bin/pip"
     if [ -n "$BUILD_DEPENDS" ]; then
         $PIP install -f $MANYLINUX_URL $BUILD_DEPENDS
     fi
