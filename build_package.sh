@@ -1,6 +1,5 @@
 #!/bin/bash
 # Depends on:
-#   UTIL_DIR
 #   REPO_DIR | PKG_SPEC
 #       (REPO_DIR for in source build; PKG_SPEC for pip build)
 #   PYTHON_VERSION
@@ -10,15 +9,17 @@
 set -e
 
 # Manylinux, openblas version, lex_ver, Python versions
-source /io/$UTIL_DIR/common_vars.sh
+MY_DIR=$(dirname "${BASH_SOURCE[0]}")
+source $MY_DIR/common_vars.sh
 
 # Unicode widths
-UNICODE_WIDTHS=${UNICODE_WIDTHS:-$32}
+UNICODE_WIDTHS=${UNICODE_WIDTHS:-32}
+WHEEL_SDIR=${WHEEL_SDIR:-wheelhouse}
 
 # Do any building prior to package building
 if [ -n "$BUILD_PRE_SCRIPT" ]; then
     # Library building tools
-    source /io/$UTIL_DIR/library_builders.sh
+    source $MY_DIR/library_builders.sh
     # Pre-package build script
     source $BUILD_PRE_SCRIPT
 fi
@@ -37,7 +38,7 @@ else:
     exit 1
 fi
 
-WHEELHOUSE=/io/wheelhouse
+WHEELHOUSE=/io/$WHEEL_SDIR
 
 # Compile wheels
 for UNICODE_WIDTH in ${UNICODE_WIDTHS}; do
