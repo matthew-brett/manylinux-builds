@@ -10,13 +10,11 @@ set -e
 # Manylinux, openblas version, lex_ver, Python versions
 source /io/common_vars.sh
 
-if [ -z "$PYZMQ_VERSIONS" ]; then
-    PYZMQ_VERSIONS="14.0.1 14.1.0 14.1.1 14.2.0 14.3.0 14.3.1 \
-        14.4.0 14.4.1 14.5.0 14.6.0 14.7.0 15.0.0 15.1.0 15.2.0"
-fi
+PYZMQ_VERSIONS="${PYZMQ_VERSIONS:-14.0.1 14.1.0 14.1.1 14.2.0 14.3.0 14.3.1 \
+                14.4.0 14.4.1 14.5.0 14.6.0 14.7.0 15.0.0 15.1.0 15.2.0}"
 
-LIBSODIUM_VERSION=1.0.8
-ZMQ_VERSION=4.1.4
+LIBSODIUM_VERSION="${LIBSODIUM_VERSION:-1.0.10}"
+ZMQ_VERSION="${ZMQ_VERSION:-4.1.5}"
 
 # Build libsodium
 build_archive libsodium-${LIBSODIUM_VERSION} https://download.libsodium.org/libsodium/releases
