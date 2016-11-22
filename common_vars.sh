@@ -38,7 +38,7 @@ function build_archive {
     # For back compatibility, please prefer build_simple
     local name_version=$(echo $1 | awk -F "-" '{print $1 " " $2}')
     local url=$2
-    source $MY_DIR/multibuild/docker_lib_builders.sh
+    source $MY_DIR/multibuild/library_builders.sh
     build_simple $name_version $url
 }
 
