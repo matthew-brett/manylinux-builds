@@ -8,7 +8,7 @@ if [ -z "$PANDAS_VERSIONS" ]; then
     PANDAS_VERSIONS="0.10.0 0.10.1 0.11.0 0.12.0 0.13.0 0.13.1 \
         0.14.0 0.14.1 0.15.0 0.15.1 0.15.2 \
         0.16.0 0.16.1 0.16.2 \
-        0.17.0 0.17.1 0.18.0"
+        0.17.0 0.17.1 0.18.0 0.18.1"
 fi
 
 # Directory to store wheels
@@ -16,7 +16,7 @@ rm_mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP="$(cpython_path $PYTHON)/bin/pip"
+    PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
     for PANDAS in ${PANDAS_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             np_ver=1.9.0
