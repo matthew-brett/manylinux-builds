@@ -12,10 +12,10 @@ BUILD_SUFFIX="${BUILD_SUFFIX:-}"
 # AUDITWHEEL_COMMIT=3db32a73f9058428fe7192e7a584b4a330fe114b
 
 # Get our own location on this filesystem
-MY_DIR=$(dirname "${BASH_SOURCE[0]}")
+MLBUILD_DIR=$(dirname "${BASH_SOURCE[0]}")
 
 # Get common manylinux functions / constants
-source $MY_DIR/multibuild/manylinux_utils.sh
+source $MLBUILD_DIR/multibuild/manylinux_utils.sh
 
 # Probably don't want to change the stuff below this line
 MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux

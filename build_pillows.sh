@@ -14,21 +14,20 @@ if [ -z "$PILLOW_VERSIONS" ]; then
     PILLOW_VERSIONS="1.7.6 1.7.7 1.7.8 2.1.0 2.5.1 2.6.0 2.6.1 2.9.0 3.0 3.1.0 3.1.1 3.1.2 3.2"
 fi
 
-source /io/library_builders.sh
+source /io/multibuild/library_builders.sh
 build_jpeg
 build_tiff
 build_openjpeg
 build_lcms2
 build_libwebp
 build_freetype
-yum install -y tk-devel
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
 
 # Compile wheels
 for PYTHON in ${PYTHON_VERSIONS}; do
-    PIP="$(cpython_path $PYTHON)/bin/pip"
+    PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
     for PILLOW in ${PILLOW_VERSIONS}; do
         if [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] &&
             [ $(lex_ver $PILLOW) -lt $(lex_ver 2) ] ; then
