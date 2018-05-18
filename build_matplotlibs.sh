@@ -38,7 +38,8 @@ for PYTHON in ${PYTHON_VERSIONS}; do
             NUMPY_VERSION=1.11.3
         elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             NUMPY_VERSION=1.9.1
-        elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] ; then
+        elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3) ] || \
+            [ $(lex_ver $MATPLOTLIB) -ge $(lex_ver 2) ] ; then
             NUMPY_VERSION=1.7.2
         else
             NUMPY_VERSION=1.6.2
