@@ -4,23 +4,29 @@
 # or something like:
 #    docker run --rm -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh
 # or:
-#    docker run --rm -e PYZMQ_VERSIONS=15.2.0 -e PYTHON_VERSIONS=2.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh
+#    docker run --rm -e PYZMQ_VERSIONS=17.0.0 -e PYTHON_VERSIONS=3.7 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pyzmqs.sh
 set -e
-
 # Manylinux, openblas version, lex_ver, Python versions
 source /io/common_vars.sh
+source ${IO_PATH}/multibuild/library_builders.sh
 
-PYZMQ_VERSIONS="${PYZMQ_VERSIONS:-14.0.1 14.1.0 14.1.1 14.2.0 14.3.0 14.3.1 \
-                14.4.0 14.4.1 14.5.0 14.6.0 14.7.0 15.0.0 15.1.0 15.2.0}"
+set -x
 
-LIBSODIUM_VERSION="${LIBSODIUM_VERSION:-1.0.10}"
-ZMQ_VERSION="${ZMQ_VERSION:-4.1.5}"
+PYZMQ_VERSIONS="${PYZMQ_VERSIONS:-16.0.4 17.0.0}"
+
+LIBSODIUM_VERSION="${LIBSODIUM_VERSION:-1.0.16}"
+ZMQ_VERSION="${ZMQ_VERSION:-4.2.5}"
+export BUILD_PREFIX="${BUILD_PREFIX:-/usr/local}"
+# ensure we link real libzmq, not bundled
+export ZMQ_PREFIX=$BUILD_PREFIX
+# URL may vary, depending on libzmq version
+export LIBZMQ_URL=${LIBZMQ_URL:-https://github.com/zeromq/libzmq/releases/download/v${ZMQ_VERSION}}
 
 # Build libsodium
-build_archive libsodium-${LIBSODIUM_VERSION} https://download.libsodium.org/libsodium/releases
+build_simple libsodium ${LIBSODIUM_VERSION} https://github.com/jedisct1/libsodium/releases/download/${LIBSODIUM_VERSION} tar.gz
 
 # Build zmq
-build_archive zeromq-${ZMQ_VERSION} https://github.com/zeromq/zeromq4-1/releases/download/v${ZMQ_VERSION}
+build_simple zeromq ${ZMQ_VERSION} ${LIBZMQ_URL} tar.gz --with-libsodium
 
 # Directory to store wheels
 rm_mkdir unfixed_wheels
