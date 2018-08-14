@@ -34,7 +34,9 @@ cd matplotlib
 for PYTHON in ${PYTHON_VERSIONS}; do
     PIP="$(cpython_path $PYTHON $UNICODE_WIDTH)/bin/pip"
     for MATPLOTLIB in ${MATPLOTLIB_VERSIONS}; do
-        if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.6) ] ; then
+        if [ $(lex_ver $PYTHON) -ge $(lex_ver 3.7) ] ; then
+            NUMPY_VERSION=1.14.5
+        elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3.6) ] ; then
             NUMPY_VERSION=1.11.3
         elif [ $(lex_ver $PYTHON) -ge $(lex_ver 3.5) ] ; then
             NUMPY_VERSION=1.9.1

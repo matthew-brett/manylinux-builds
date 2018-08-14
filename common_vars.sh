@@ -2,7 +2,7 @@
 IO_PATH="${IO_PATH:-/io}"
 # BLAS_SOURCE can be "atlas" or "openblas"
 BLAS_SOURCE="${BLAS_SOURCE:-openblas}"
-PYTHON_VERSIONS="${PYTHON_VERSIONS:-2.6 2.7 3.3 3.4 3.5}"
+PYTHON_VERSIONS="${PYTHON_VERSIONS:-2.7 3.4 3.5 3.6 3.7}"
 OPENBLAS_VERSION="${OPENBLAS_VERSION:-0.2.18}"
 # ATLAS_TYPE can be 'default' or 'custom'
 ATLAS_TYPE="${ATLAS_TYPE:-default}"
