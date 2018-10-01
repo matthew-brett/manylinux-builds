@@ -1,4 +1,10 @@
 #!/bin/bash
+# Run with:
+#    docker run --rm -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pandas.sh
+# or something like:
+#    docker run --rm -e PYTHON_VERSIONS=3.5 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pandas.sh
+# or:
+#    docker run --rm -e PANDAS_VERSIONS=0.23.4 -e PYTHON_VERSIONS=3.5 -v $PWD:/io quay.io/pypa/manylinux1_x86_64 /io/build_pandas.sh
 set -e
 
 # Manylinux, openblas version, lex_ver
@@ -33,6 +39,13 @@ for PYTHON in ${PYTHON_VERSIONS}; do
         # Add numpy to requirements to avoid upgrading numpy version
         $PIP wheel -f tmp -w unfixed_wheels "numpy==$np_ver" "pandas==$PANDAS"
     done
+done
+
+# Delete everything but pandas from wheelhouse
+for fn in $(ls unfixed_wheels); do
+    if [[ ! "$fn" =~ ^pandas-.* ]]; then
+        rm unfixed_wheels/$fn
+    fi
 done
 
 # Bundle external shared libraries into the wheels
